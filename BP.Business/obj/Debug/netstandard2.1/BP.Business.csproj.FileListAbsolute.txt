@@ -1,0 +1,8 @@
+C:\Users\jbatu\Documents\GitHub\BP\BP.Business\obj\Debug\netstandard2.1\BP.Business.AssemblyInfoInputs.cache
+C:\Users\jbatu\Documents\GitHub\BP\BP.Business\obj\Debug\netstandard2.1\BP.Business.AssemblyInfo.cs
+C:\Users\jbatu\Documents\GitHub\BP\BP.Business\obj\Debug\netstandard2.1\BP.Business.csproj.CoreCompileInputs.cache
+C:\Users\jbatu\Documents\GitHub\BP\BP.Business\bin\Debug\netstandard2.1\BP.Business.deps.json
+C:\Users\jbatu\Documents\GitHub\BP\BP.Business\bin\Debug\netstandard2.1\BP.Business.dll
+C:\Users\jbatu\Documents\GitHub\BP\BP.Business\bin\Debug\netstandard2.1\BP.Business.pdb
+C:\Users\jbatu\Documents\GitHub\BP\BP.Business\obj\Debug\netstandard2.1\BP.Business.dll
+C:\Users\jbatu\Documents\GitHub\BP\BP.Business\obj\Debug\netstandard2.1\BP.Business.pdb

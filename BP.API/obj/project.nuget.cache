@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "iBEaEGYvHfEV4HR/lQfIQSlJLwExmDVtJK8KQqxf9VEx4zpfGtdRX01PwoWsRg/RtvpUUHnDzFBGFK5I1GtZGQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\jbatu\\Documents\\GitHub\\BP\\BP.API\\BP.API.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\jbatu\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.10.9\\microsoft.visualstudio.azure.containers.tools.targets.1.10.9.nupkg.sha512",
+    "C:\\Users\\jbatu\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.2\\microsoft.aspnetcore.app.ref.3.1.2.nupkg.sha512"
+  ],
+  "logs": []
+}
