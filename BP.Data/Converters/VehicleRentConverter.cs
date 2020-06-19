@@ -3,23 +3,19 @@ using System.Linq;
 
 namespace BP.Converters
 {
-    internal class VehicleRentConverter
+    public class VehicleRentConverter
     {
-        public Models.VehicleRent Convert(Entities.VehicleRent vehicleRent)
+        public Entities.VehicleRent Convert(Models.VehicleRent vehicleRent)
         {
-            return new Models.VehicleRent
+            return new Entities.VehicleRent
             {
-                DriverId = vehicleRent.DriverId,
+                DriverID = vehicleRent.DriverID,
                 TimeFrom = vehicleRent.TimeFrom,
                 TimeUntil = vehicleRent.TimeUntil,
-                VehicleId = vehicleRent.VehicleId,
-                VehicleRentId = vehicleRent.VehicleRentId
+                VehicleID = vehicleRent.VehicleID,
+                VehicleRentID = vehicleRent.VehicleRentID,
+                IsOwned = vehicleRent.IsOwned
             };
-        }
-
-        public IEnumerable<Models.VehicleRent> Convert(IEnumerable<Entities.VehicleRent> vehicleRents)
-        {
-            return vehicleRents.Select(x => Convert(x));
         }
     }
 }

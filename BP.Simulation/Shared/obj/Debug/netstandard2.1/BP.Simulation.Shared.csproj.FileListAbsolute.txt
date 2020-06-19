@@ -1,0 +1,9 @@
+C:\Users\jbatu\Documents\GitHub\BP\BP.Simulation\Shared\bin\Debug\netstandard2.1\BP.Simulation.Shared.deps.json
+C:\Users\jbatu\Documents\GitHub\BP\BP.Simulation\Shared\bin\Debug\netstandard2.1\BP.Simulation.Shared.dll
+C:\Users\jbatu\Documents\GitHub\BP\BP.Simulation\Shared\bin\Debug\netstandard2.1\BP.Simulation.Shared.pdb
+C:\Users\jbatu\Documents\GitHub\BP\BP.Simulation\Shared\obj\Debug\netstandard2.1\BP.Simulation.Shared.csprojAssemblyReference.cache
+C:\Users\jbatu\Documents\GitHub\BP\BP.Simulation\Shared\obj\Debug\netstandard2.1\BP.Simulation.Shared.AssemblyInfoInputs.cache
+C:\Users\jbatu\Documents\GitHub\BP\BP.Simulation\Shared\obj\Debug\netstandard2.1\BP.Simulation.Shared.AssemblyInfo.cs
+C:\Users\jbatu\Documents\GitHub\BP\BP.Simulation\Shared\obj\Debug\netstandard2.1\BP.Simulation.Shared.csproj.CoreCompileInputs.cache
+C:\Users\jbatu\Documents\GitHub\BP\BP.Simulation\Shared\obj\Debug\netstandard2.1\BP.Simulation.Shared.dll
+C:\Users\jbatu\Documents\GitHub\BP\BP.Simulation\Shared\obj\Debug\netstandard2.1\BP.Simulation.Shared.pdb

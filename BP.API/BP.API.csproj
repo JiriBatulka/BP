@@ -4,10 +4,20 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>c9536e48-d7ac-4b27-b4d2-5f6238cb98db</UserSecretsId>
     <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
+    <RootNamespace>BP</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\Parsers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BP.Business\BP.Business.csproj" />
+    <ProjectReference Include="..\BP.Data\BP.Data.csproj" />
   </ItemGroup>
 
 

@@ -3,29 +3,23 @@ using System.Linq;
 
 namespace BP.Converters
 {
-    internal class VehicleConverter
+    public class VehicleConverter
     {
-        public Models.Vehicle Convert(Entities.Vehicle vehicle)
+        public Entities.Vehicle Convert(Models.Vehicle vehicle)
         {
-            return new Models.Vehicle
+            return new Entities.Vehicle
             {
                 AdultSeats = vehicle.AdultSeats,
                 BootCapacity = vehicle.AdultSeats,
                 Colour = vehicle.Colour,
                 CurrentLat = vehicle.CurrentLat,
                 CurrentLng = vehicle.CurrentLng,
-                DriverId = vehicle.DriverId,
                 InfantSeats = vehicle.InfantSeats,
                 IsShared = vehicle.IsShared,
-                Spz = vehicle.Spz,
+                NumberPlate = vehicle.NumberPlate,
                 Type = vehicle.Type,
-                VehicleId = vehicle.VehicleId,
+                VehicleID = vehicle.VehicleID
             };
-        }
-
-        public IEnumerable<Models.Vehicle> Convert(IEnumerable<Entities.Vehicle> vehicles)
-        {
-            return vehicles.Select(x => Convert(x));
         }
     }
 }

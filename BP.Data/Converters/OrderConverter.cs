@@ -3,27 +3,22 @@ using System.Linq;
 
 namespace BP.Converters
 {
-    internal class OrderConverter
+    public class OrderConverter
     {
-        public Models.Order Convert(Entities.Order order)
+        public Entities.Order Convert(Models.Order order)
         {
-            return new Models.Order
+            return new Entities.Order
             {
-                ClientId = order.ClientId,
+                CustomerID = order.CustomerID,
                 EndLocationLat = order.EndLocationLat,
                 EndLocationLng = order.EndLocationLng,
                 EndTimeEstimate = order.EndTimeEstimate,
-                OrderId = order.OrderId,
+                OrderID = order.OrderID,
                 StartLocationLat = order.StartLocationLat,
                 StartLocationLng = order.StartLocationLng,
                 StartTime = order.StartTime,
-                VehicleId = order.VehicleId
+                VehicleID = order.VehicleID
             };
-        }
-
-        public IEnumerable<Models.Order> Convert(IEnumerable<Entities.Order> orders)
-        {
-            return orders.Select(x => Convert(x));
         }
     }
 }

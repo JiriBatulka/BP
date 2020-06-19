@@ -5,7 +5,7 @@ namespace BP.Models
 {
     public class Driver
     {
-        public Guid DriverId { get; set; }
+        public Guid DriverID { get; set; }
         public string FirstName { get; set; }
         public string Surname { get; set; }
     }

@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace BP.Entities
 {
-    public partial class VehicleRent
+    public class VehicleRent
     {
-        public Guid VehicleRentId { get; set; }
-        public Guid VehicleId { get; set; }
-        public Guid DriverId { get; set; }
-        public DateTime TimeFrom { get; set; }
-        public DateTime TimeUntil { get; set; }
+        public Guid VehicleRentID { get; set; }
+        public DateTime? TimeFrom { get; set; }
+        public DateTime? TimeUntil { get; set; }
+        public bool IsOwned { get; set; }
 
-        public virtual Driver Driver { get; set; }
-        public virtual Vehicle VehicleRentNavigation { get; set; }
+        public Guid VehicleID { get; set; }
+        public Vehicle Vehicle { get; set; }
+        public Guid DriverID { get; set; }
+        public Driver Driver { get; set; }
     }
 }

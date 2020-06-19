@@ -3,21 +3,16 @@ using System.Linq;
 
 namespace BP.Converters
 {
-    internal class DriverConverter
+    public class DriverConverter
     {
-        public Models.Driver Convert(Entities.Driver driver)
+        public Entities.Driver Convert(Models.Driver driver)
         {
-            return new Models.Driver
+            return new Entities.Driver
             {
-                DriverId = driver.DriverId,
+                DriverID = driver.DriverID,
                 FirstName = driver.FirstName,
                 Surname = driver.Surname
             };
-        }
-
-        public IEnumerable<Models.Driver> Convert(IEnumerable<Entities.Driver> drivers)
-        {
-            return drivers.Select(x => Convert(x));
         }
     }
 }

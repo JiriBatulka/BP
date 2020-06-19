@@ -5,10 +5,11 @@ namespace BP.Models
 {
     public class VehicleRent
     {
-        public Guid VehicleRentId { get; set; }
-        public Guid VehicleId { get; set; }
-        public Guid DriverId { get; set; }
-        public DateTime TimeFrom { get; set; }
-        public DateTime TimeUntil { get; set; }
+        public Guid VehicleRentID { get; set; }
+        public Guid VehicleID { get; set; }
+        public Guid DriverID { get; set; }
+        public DateTime? TimeFrom { get; set; }
+        public DateTime? TimeUntil { get; set; }
+        public bool IsOwned { get; set; }
     }
 }

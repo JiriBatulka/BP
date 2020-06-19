@@ -6,3 +6,4 @@ C:\Users\jbatu\Documents\GitHub\BP\BP.Business\bin\Debug\netstandard2.1\BP.Busin
 C:\Users\jbatu\Documents\GitHub\BP\BP.Business\bin\Debug\netstandard2.1\BP.Business.pdb
 C:\Users\jbatu\Documents\GitHub\BP\BP.Business\obj\Debug\netstandard2.1\BP.Business.dll
 C:\Users\jbatu\Documents\GitHub\BP\BP.Business\obj\Debug\netstandard2.1\BP.Business.pdb
+C:\Users\jbatu\Documents\GitHub\BP\BP.Business\obj\Debug\netstandard2.1\BP.Business.csprojAssemblyReference.cache
