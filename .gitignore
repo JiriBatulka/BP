@@ -338,3 +338,11 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+
+#Custom ignored files
+BP.API\appsettings.Development.json
+BP.API\appsettings.json
+BP.Presentation\appsettings.Development.json
+BP.Presentation\appsettings.json
+BP.Simulation\Server\appsettings.Development.json
+BP.Simulation\Server\appsettings.json
