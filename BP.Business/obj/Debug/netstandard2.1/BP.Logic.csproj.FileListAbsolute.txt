@@ -1,9 +1,0 @@
-C:\Users\jbatu\Documents\GitHub\BP\BP.Business\bin\Debug\netstandard2.1\BP.Logic.deps.json
-C:\Users\jbatu\Documents\GitHub\BP\BP.Business\bin\Debug\netstandard2.1\BP.Logic.dll
-C:\Users\jbatu\Documents\GitHub\BP\BP.Business\bin\Debug\netstandard2.1\BP.Logic.pdb
-C:\Users\jbatu\Documents\GitHub\BP\BP.Business\obj\Debug\netstandard2.1\BP.Logic.AssemblyInfoInputs.cache
-C:\Users\jbatu\Documents\GitHub\BP\BP.Business\obj\Debug\netstandard2.1\BP.Logic.AssemblyInfo.cs
-C:\Users\jbatu\Documents\GitHub\BP\BP.Business\obj\Debug\netstandard2.1\BP.Logic.csproj.CoreCompileInputs.cache
-C:\Users\jbatu\Documents\GitHub\BP\BP.Business\obj\Debug\netstandard2.1\BP.Logic.dll
-C:\Users\jbatu\Documents\GitHub\BP\BP.Business\obj\Debug\netstandard2.1\BP.Logic.pdb
-C:\Users\jbatu\Documents\GitHub\BP\BP.Business\obj\Debug\netstandard2.1\BP.Logic.csprojAssemblyReference.cache
