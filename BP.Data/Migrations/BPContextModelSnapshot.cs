@@ -104,6 +104,9 @@ namespace BP.Migrations
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("VehicleArriveEstimate")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("VehicleID")
                         .HasColumnType("uniqueidentifier");
 

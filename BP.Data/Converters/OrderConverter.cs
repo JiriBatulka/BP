@@ -17,7 +17,9 @@ namespace BP.Converters
                 StartLocationLat = order.StartLocationLat,
                 StartLocationLng = order.StartLocationLng,
                 StartTime = order.StartTime,
-                VehicleID = order.VehicleID
+                VehicleID = order.VehicleID,
+                IsActive = order.IsActive,
+                VehicleArriveEstimate = order.VehicleArriveEstimate
             };
         }
     }

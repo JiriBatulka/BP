@@ -1,6 +1,4 @@
-﻿using BP.Entities;
-using BP.StoredProcedures;
-using BP.StoredProcedures.Definitions;
+﻿using BP.StoredProcedures.Definitions;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BP.Migrations

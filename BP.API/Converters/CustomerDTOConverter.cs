@@ -6,7 +6,7 @@ using static BP.DTOs.CustomerDTO;
 
 namespace BP.Converters
 {
-    public class CustomerConverter
+    public class CustomerDTOConverter
     {
         public Customer Convert(AddCustomerDTO addCustomerDTO)
         {
@@ -14,6 +14,7 @@ namespace BP.Converters
             {
                 FirstName = addCustomerDTO.FirstName,
                 Surname = addCustomerDTO.Surname,
+                PhoneNumber = addCustomerDTO.PhoneNumber
             };
         }
 

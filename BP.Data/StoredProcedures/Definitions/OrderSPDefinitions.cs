@@ -20,26 +20,42 @@ namespace BP.StoredProcedures.Definitions
                 @"CREATE PROCEDURE [dbo].[AddOrder]
                         @OrderID uniqueidentifier,
                         @StartTime datetime2(7),
+                        @VehicleArriveEstimate datetime2(7),
                         @EndTimeEstimate datetime2(7),
                         @StartLocationLat float,
                         @StartLocationLng float,
                         @EndLocationLat float,
                         @EndLocationLng float,
                         @CustomerID uniqueidentifier,
-                        @VehicleID uniqueidentifier
+                        @VehicleID uniqueidentifier,
+                        @IsActive bit)
                     AS
                     BEGIN
                         INSERT INTO [dbo].[Orders]  
-                            (DriverID,  
-                             FirstName,  
-                             Surname,  
-                             PhoneNumber)
+                            (OrderID,  
+                             StartTime,  
+                             VehicleArriveEstimate,
+                             EndTimeEstimate,
+                             StartLocationLat,
+                             StartLocationLng,
+                             EndLocationLat,
+                             EndLocationLng,
+                             CustomerID,
+                             VehicleID,
+                             IsActive)
   
                         VALUES ( 
-                             @DriverID,  
-                             @FirstName,  
-                             @Surname,  
-                             @PhoneNumber)  
+                             @OrderID,  
+                             @StartTime,  
+                             @VehicleArriveEstimate,
+                             @EndTimeEstimate,  
+                             @StartLocationLat,
+                             @StartLocationLng,
+                             @EndLocationLat,
+                             @EndLocationLng,
+                             @CustomerID,
+                             @VehicleID,
+                             @IsActive)  
                     END";
         }
     }

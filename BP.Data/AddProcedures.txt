@@ -1,0 +1,14 @@
+﻿            foreach (var definition in CustomerSPDefinitions.Definitions)
+                migrationBuilder.Sql(definition.Value);
+
+            foreach (var definition in DriverSPDefinitions.Definitions)
+                migrationBuilder.Sql(definition.Value);
+
+            foreach (var definition in VehicleSPDefinitions.Definitions)
+                migrationBuilder.Sql(definition.Value);
+
+            foreach (var definition in OrderSPDefinitions.Definitions)
+                migrationBuilder.Sql(definition.Value);
+
+            foreach (var definition in VehicleRentSPDefinitions.Definitions)
+                migrationBuilder.Sql(definition.Value);

@@ -11,29 +11,44 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BP.Controllers
 {
+    [Produces("application/json")]
     [Route("api/customer")]
     [ApiController]
     public class CustomerController : ControllerBase
     {
         private readonly IApiCustomerRepository customerRepository;
-        private readonly CustomerConverter customerConverter;
+        private readonly CustomerDTOConverter customerDTOConverter;
 
-        public CustomerController(IApiCustomerRepository customerRepository, CustomerConverter customerConverter)
+        public CustomerController(IApiCustomerRepository customerRepository, CustomerDTOConverter customerDTOConverter)
         {
             this.customerRepository = customerRepository;
-            this.customerConverter = customerConverter;
+            this.customerDTOConverter = customerDTOConverter;
         }
 
         [HttpGet("add")]
-        public async Task<Guid> AddCustomerAsync([FromBody] CustomerDTO.AddCustomerDTO value)
+        public async Task<IActionResult> AddCustomerAsync([FromBody]CustomerDTO.AddCustomerDTO value)
         {
-            return await customerRepository.AddCustomerAsync(customerConverter.Convert(value));
+            try
+            {
+                return Ok(await customerRepository.AddCustomerAsync(customerDTOConverter.Convert(value)));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
+            }
         }
 
         [HttpGet("move")]
-        public async Task MoveCustomerAsync([FromBody] CustomerDTO.MoveCustomerDTO value)
+        public async Task<IActionResult> MoveCustomerAsync([FromBody] CustomerDTO.MoveCustomerDTO value)
         {
-            await customerRepository.MoveCustomerAsync(customerConverter.Convert(value));
+            try
+            {
+                return Ok(await customerRepository.MoveCustomerAsync(customerDTOConverter.Convert(value)));
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
         }
     }
 }

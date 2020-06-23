@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BP.Converters
 {
-    public class OrderConverter
+    public class OrderDTOConverter
     {
         public Order Convert(OrderDTO.AddOrderDTO addOrderDTO)
         {

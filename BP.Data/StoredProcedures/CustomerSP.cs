@@ -18,7 +18,10 @@ namespace BP.StoredProcedures
 
         public async Task<bool> AddCustomerAsync(Customer customer)
         {
-            return await BPContext.Customers.FromSqlRaw($"EXECUTE {CustomerSPDefinitions.AddCustomer} \'{customer.CustomerID}\', \'{customer.FirstName}\', \'{customer.Surname}\', \'{customer.PhoneNumber}\'").AnyAsync();
+            //await BPContext.Database.ExecuteSqlCommandAsync($"EXECUTE {CustomerSPDefinitions.AddCustomer} \'{customer.CustomerID}\', \'{customer.FirstName}\', \'{customer.Surname}\', \'{customer.PhoneNumber}\', \'{customer.IsActive}\'");
+            BPContext.Customers.Add(customer);
+            BPContext.SaveChanges();
+            return true;
         }
 
         public async Task<bool> MoveCustomerAsync(Customer customer)

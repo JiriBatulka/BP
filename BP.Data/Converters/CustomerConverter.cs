@@ -15,7 +15,8 @@ namespace BP.Converters
                 Surname = customer.Surname,
                 PhoneNumber = customer.PhoneNumber,
                 CurrentLat = customer.CurrentLat,
-                CurrentLng = customer.CurrentLng
+                CurrentLng = customer.CurrentLng,
+                IsActive = customer.IsActive
             };
         }
     }

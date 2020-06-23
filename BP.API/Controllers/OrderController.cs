@@ -15,18 +15,18 @@ namespace BP.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IApiOrderRepository orderRepository;
-        private readonly OrderConverter orderConverter;
+        private readonly OrderDTOConverter orderDTOConverter;
 
-        public OrderController(IApiOrderRepository orderRepository, OrderConverter orderConverter)
+        public OrderController(IApiOrderRepository orderRepository, OrderDTOConverter orderDTOConverter)
         {
             this.orderRepository = orderRepository;
-            this.orderConverter = orderConverter;
+            this.orderDTOConverter = orderDTOConverter;
         }
 
         [HttpGet("add")]
         public async Task<Guid> AddOrderAsync([FromBody] OrderDTO.AddOrderDTO value)
         {
-            return await orderRepository.AddOrderAsync(orderConverter.Convert(value));
+            return await orderRepository.AddOrderAsync(orderDTOConverter.Convert(value));
         }
     }
 }

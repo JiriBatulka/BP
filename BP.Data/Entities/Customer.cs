@@ -13,6 +13,7 @@ namespace BP.Entities
         public string PhoneNumber { get; set; }
         public double? CurrentLat { get; set; }
         public double? CurrentLng { get; set; }
+        public bool IsActive { get; set; }
 
         public List<Order> Orders { get; set; }
     }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BP.Converters
 {
-    public class VehicleConverter
+    public class VehicleDTOConverter
     {
         public Vehicle Convert(VehicleDTO.AddVehicleDTO addVehicleDTO)
         {

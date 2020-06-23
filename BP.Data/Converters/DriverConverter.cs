@@ -11,7 +11,8 @@ namespace BP.Converters
             {
                 DriverID = driver.DriverID,
                 FirstName = driver.FirstName,
-                Surname = driver.Surname
+                Surname = driver.Surname,
+                PhoneNumber = driver.PhoneNumber
             };
         }
     }

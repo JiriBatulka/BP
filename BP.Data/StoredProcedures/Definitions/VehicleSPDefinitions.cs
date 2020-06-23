@@ -28,6 +28,7 @@ namespace BP.StoredProcedures.Definitions
                         @InfantSeats int,
                         @BootCapacity int,
                         @IsShared bit,
+                        @IsActive bit
                     AS
                     BEGIN
                         INSERT INTO [dbo].[Vehicles] (
@@ -38,7 +39,8 @@ namespace BP.StoredProcedures.Definitions
                              AdultSeats,  
                              InfantSeats,  
                              BootCapacity,  
-                             IsShared)
+                             IsShared,
+                             IsActive)
   
                         VALUES ( 
                              @VehicleID,  
@@ -48,7 +50,8 @@ namespace BP.StoredProcedures.Definitions
                              @AdultSeats,  
                              @InfantSeats,  
                              @BootCapacity,  
-                             @IsShared) 
+                             @IsShared,
+                             @IsActive)
                     END";
         }
 
@@ -57,8 +60,8 @@ namespace BP.StoredProcedures.Definitions
             Definitions[MoveVehicle] =
                 @"CREATE PROCEDURE [dbo].[MoveVehicle]
                         @VehicleID uniqueidentifier,
-                        @CurrentLat nvarchar(31),
-                        @CurrentLng nvarchar(31)
+                        @CurrentLat float,
+                        @CurrentLng float
                     AS
                     BEGIN
                         UPDATE [dbo].[Vehicles]

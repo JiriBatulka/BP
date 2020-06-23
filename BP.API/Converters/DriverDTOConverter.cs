@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BP.Converters
 {
-    public class DriverConverter
+    public class DriverDTOConverter
     {
         public Driver Convert(DriverDTO.AddDriverDTO addDriverDTO)
         {
@@ -15,6 +15,7 @@ namespace BP.Converters
             {
                 FirstName = addDriverDTO.FirstName,
                 Surname = addDriverDTO.Surname,
+                PhoneNumber = addDriverDTO.PhoneNumber
             };
         }
     }

@@ -24,20 +24,23 @@ namespace BP.StoredProcedures.Definitions
                         @CustomerID uniqueidentifier,
                         @FirstName nvarchar(31),
                         @Surname nvarchar(31),
-                        @PhoneNumber nvarchar(15)
+                        @PhoneNumber nvarchar(15),
+                        @IsActive bit
                     AS
                     BEGIN
                         INSERT INTO [dbo].[Customers]  
                             (CustomerID,  
                              FirstName,  
                              Surname,  
-                             PhoneNumber)
+                             PhoneNumber,
+                             IsActive)
   
                         VALUES ( 
                              @CustomerID,  
                              @FirstName,  
                              @Surname,  
-                             @PhoneNumber)  
+                             @PhoneNumber,
+                             @IsActive)  
                     END";
         }
 
@@ -46,8 +49,8 @@ namespace BP.StoredProcedures.Definitions
             Definitions[MoveCustomer] =
             @"CREATE PROCEDURE [dbo].[MoveCustomer]
                         @CustomerID uniqueidentifier,
-                        @CurrentLat nvarchar(31),
-                        @CurrentLng nvarchar(31)
+                        @CurrentLat float,
+                        @CurrentLng float
                     AS
                     BEGIN
                         UPDATE [dbo].[Customers]

@@ -26,9 +26,9 @@ namespace BP.Repositories
             return customer.CustomerID;
         }
 
-        public async Task MoveCustomerAsync(Models.Customer customer)
+        public async Task<bool> MoveCustomerAsync(Models.Customer customer)
         {
-            await customerSP.MoveCustomerAsync(customerConverter.Convert(customer));
+            return await customerSP.MoveCustomerAsync(customerConverter.Convert(customer));
         }
     }
 }

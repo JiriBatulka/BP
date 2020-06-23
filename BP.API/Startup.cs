@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BP.ApiRepositories;
+using BP.ApiRepositories.Interfaces;
+using BP.Converters;
+using BP.Entities;
 using BP.EntityRepositories;
 using BP.Repositories;
+using BP.StoredProcedures;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -29,8 +34,13 @@ namespace BP.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddTransient<ApiCustomerRepository>();
+            services.AddTransient<IApiCustomerRepository, ApiCustomerRepository>();
             services.AddTransient<ICustomerRepository, CustomerRepository>();
+            services.AddTransient<CustomerDTOConverter>();
+            services.AddTransient<CustomerConverter>();
+            services.AddTransient<CustomerSP>();
+            services.AddDbContext<BPContext>
+                (options => options.UseSqlServer(Configuration.GetConnectionString("BPDatabase")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

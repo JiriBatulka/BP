@@ -8,5 +8,6 @@ namespace BP.Models
         public Guid DriverID { get; set; }
         public string FirstName { get; set; }
         public string Surname { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }

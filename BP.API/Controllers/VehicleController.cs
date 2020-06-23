@@ -15,24 +15,24 @@ namespace BP.Controllers
     public class VehicleController : ControllerBase
     {
         private readonly IApiVehicleRepository vehicleRepository;
-        private readonly VehicleConverter vehicleConverter;
+        private readonly VehicleDTOConverter vehicleDTOConverter;
 
-        public VehicleController(IApiVehicleRepository vehicleRepository, VehicleConverter vehicleConverter)
+        public VehicleController(IApiVehicleRepository vehicleRepository, VehicleDTOConverter vehicleDTOConverter)
         {
             this.vehicleRepository = vehicleRepository;
-            this.vehicleConverter = vehicleConverter;
+            this.vehicleDTOConverter = vehicleDTOConverter;
         }
 
         [HttpGet("add")]
         public async Task<Guid> AddVehicleAsync([FromBody] VehicleDTO.AddVehicleDTO value)
         {
-            return await vehicleRepository.AddVehicleAsync(vehicleConverter.Convert(value));
+            return await vehicleRepository.AddVehicleAsync(vehicleDTOConverter.Convert(value));
         }
 
         [HttpGet("move")]
         public async Task MoveVehicleAsync([FromBody] VehicleDTO.MoveVehicleDTO value)
         {
-            await vehicleRepository.MoveVehicleAsync(vehicleConverter.Convert(value));
+            await vehicleRepository.MoveVehicleAsync(vehicleDTOConverter.Convert(value));
         }
     }
 }

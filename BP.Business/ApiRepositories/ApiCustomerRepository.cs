@@ -1,4 +1,5 @@
-﻿using BP.EntityRepositories;
+﻿using BP.ApiRepositories.Interfaces;
+using BP.EntityRepositories;
 using BP.Models;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BP.ApiRepositories
 {
-    public class ApiCustomerRepository
+    public class ApiCustomerRepository : IApiCustomerRepository
     {
         private ICustomerRepository customerRepository;
 
@@ -18,11 +19,12 @@ namespace BP.ApiRepositories
 
         public async Task<Guid> AddCustomerAsync(Customer customer)
         {
+            customer.IsActive = true;
             return await customerRepository.AddCustomerAsync(customer);
         }
-        public async Task MoveCustomerAsync(Customer customer)
+        public async Task<bool> MoveCustomerAsync(Customer customer)
         {
-            await customerRepository.MoveCustomerAsync(customer);
+            return await customerRepository.MoveCustomerAsync(customer);
         }
     }
 }

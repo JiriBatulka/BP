@@ -63,6 +63,7 @@ namespace BP.Migrations
                 {
                     OrderID = table.Column<Guid>(nullable: false),
                     StartTime = table.Column<DateTime>(nullable: false),
+                    VehicleArriveEstimate = table.Column<DateTime>(nullable: false),
                     EndTimeEstimate = table.Column<DateTime>(nullable: false),
                     StartLocationLat = table.Column<double>(nullable: false),
                     StartLocationLng = table.Column<double>(nullable: false),

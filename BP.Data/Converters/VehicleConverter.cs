@@ -18,7 +18,8 @@ namespace BP.Converters
                 IsShared = vehicle.IsShared,
                 NumberPlate = vehicle.NumberPlate,
                 Type = vehicle.Type,
-                VehicleID = vehicle.VehicleID
+                VehicleID = vehicle.VehicleID,
+                IsActive = vehicle.IsActive
             };
         }
     }

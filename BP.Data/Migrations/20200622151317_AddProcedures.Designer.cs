@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BP.Migrations
 {
     [DbContext(typeof(BPContext))]
-    [Migration("20200616172420_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20200622151317_AddProcedures")]
+    partial class AddProcedures
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -104,6 +104,9 @@ namespace BP.Migrations
                         .HasColumnType("float");
 
                     b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("VehicleArriveEstimate")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("VehicleID")
