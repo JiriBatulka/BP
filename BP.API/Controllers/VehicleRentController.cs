@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BP.Controllers
 {
+    [Produces("application/json")]
     [Route("api/vehiclerent")]
     [ApiController]
     public class VehicleRentController : ControllerBase
@@ -24,9 +25,16 @@ namespace BP.Controllers
         }
 
         [HttpGet("add")]
-        public async Task<Guid> AddVehicleAsync([FromBody] VehicleRentDTO.AddVehicleRentDTO value)
+        public async Task<IActionResult> AddVehicleAsync([FromBody] VehicleRentDTO.AddVehicleRentDTO value)
         {
-            return await vehicleRentRepository.AddVehicleRentAsync(vehicleRentDTOConverter.Convert(value));
+            try
+            { 
+            return Ok(await vehicleRentRepository.AddVehicleRentAsync(vehicleRentDTOConverter.Convert(value)));
         }
+            catch
+            {
+                return StatusCode(500);
+    }
+}
     }
 }

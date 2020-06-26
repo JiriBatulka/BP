@@ -1,8 +1,10 @@
 ﻿using BP.Entities;
 using BP.StoredProcedures.Definitions;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,15 +12,38 @@ namespace BP.StoredProcedures
 {
     public class DriverSP
     {
-        private readonly BPContext BPContext;
-        public DriverSP(BPContext BPContext)
+        private readonly DataSettings dataSettings;
+        public DriverSP(DataSettings dataSettings)
         {
-            this.BPContext = BPContext;
+            this.dataSettings = dataSettings;
         }
 
-        public async Task<bool> AddDriverAsync(Driver driver)
+        public async Task<Guid> AddDriverAsync(Driver driver)
         {
-            return await BPContext.Customers.FromSqlRaw($"EXECUTE {DriverSPDefinitions.AddDriver} \'{driver.DriverID}\', \'{driver.FirstName}\', \'{driver.Surname}\', \'{driver.PhoneNumber}\'").AnyAsync();
+            SqlConnection conn = new SqlConnection();
+            SqlCommand cmd = new SqlCommand();
+            conn.ConnectionString = dataSettings.ConnectionString;
+            cmd.Connection = conn;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = DriverSPDefinitions.AddDriver;
+
+            cmd.Parameters.AddWithValue("@FirstName", driver.FirstName);
+            cmd.Parameters.AddWithValue("@Surname", driver.Surname);
+            cmd.Parameters.AddWithValue("@PhoneNumber", driver.PhoneNumber);
+
+            cmd.Parameters.Add("@DriverID", SqlDbType.UniqueIdentifier);
+            cmd.Parameters["@DriverID"].Direction = ParameterDirection.Output;
+
+            try
+            {
+                conn.Open();
+                await cmd.ExecuteNonQueryAsync();
+                return (Guid)cmd.Parameters["@DriverID"].Value;
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
     }
 }

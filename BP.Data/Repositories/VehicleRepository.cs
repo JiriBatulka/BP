@@ -21,10 +21,7 @@ namespace BP.Repositories
 
         public async Task<Guid> AddVehicleAsync(Models.Vehicle vehicle)
         {
-            if (vehicle.VehicleID == null || vehicle.VehicleID == new Guid())
-                vehicle.VehicleID = Guid.NewGuid();
-            await vehicleSP.AddVehicleAsync(vehicleConverter.Convert(vehicle));
-            return vehicle.VehicleID;
+            return await vehicleSP.AddVehicleAsync(vehicleConverter.Convert(vehicle));
         }
 
         public async Task MoveVehicleAsync(Models.Vehicle vehicle)

@@ -10,6 +10,7 @@ using BP.DTOs;
 
 namespace BP.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class VehicleController : ControllerBase
@@ -24,15 +25,30 @@ namespace BP.Controllers
         }
 
         [HttpGet("add")]
-        public async Task<Guid> AddVehicleAsync([FromBody] VehicleDTO.AddVehicleDTO value)
+        public async Task<IActionResult> AddVehicleAsync([FromBody] VehicleDTO.AddVehicleDTO value)
         {
-            return await vehicleRepository.AddVehicleAsync(vehicleDTOConverter.Convert(value));
+            try
+            {
+                return Ok(await vehicleRepository.AddVehicleAsync(vehicleDTOConverter.Convert(value)));
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
         }
 
         [HttpGet("move")]
-        public async Task MoveVehicleAsync([FromBody] VehicleDTO.MoveVehicleDTO value)
+        public async Task<IActionResult> MoveVehicleAsync([FromBody] VehicleDTO.MoveVehicleDTO value)
         {
-            await vehicleRepository.MoveVehicleAsync(vehicleDTOConverter.Convert(value));
+            try
+            {
+                await vehicleRepository.MoveVehicleAsync(vehicleDTOConverter.Convert(value));
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
         }
     }
 }

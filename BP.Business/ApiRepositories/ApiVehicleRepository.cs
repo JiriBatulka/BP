@@ -10,21 +10,21 @@ namespace BP.ApiRepositories
 {
     public class ApiVehicleRepository : IApiVehicleRepository
     {
-        private IVehicleRepository vehicleRepository;
+        private readonly IVehicleRepository vehicleRepository;
 
         public ApiVehicleRepository(IVehicleRepository vehicleRepository)
         {
             this.vehicleRepository = vehicleRepository;
         }
 
-        public Task<Guid> AddVehicleAsync(Vehicle vehicle)
+        public async Task<Guid> AddVehicleAsync(Vehicle vehicle)
         {
-            throw new NotImplementedException();
+            return await vehicleRepository.AddVehicleAsync(vehicle);
         }
 
-        public Task MoveVehicleAsync(Vehicle vehicle)
+        public async Task MoveVehicleAsync(Vehicle vehicle)
         {
-            throw new NotImplementedException();
+            await vehicleRepository.MoveVehicleAsync(vehicle);
         }
     }
 }

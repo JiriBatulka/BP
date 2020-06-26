@@ -15,6 +15,6 @@ namespace BP.Models
         public double StartLocationLng { get; set; }
         public double? EndLocationLat { get; set; }
         public double? EndLocationLng { get; set; }
-        public bool IsActive { get; set; }
+        public bool? IsActive { get; set; }
     }
 }

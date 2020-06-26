@@ -1,8 +1,10 @@
 ﻿using BP.Entities;
 using BP.StoredProcedures.Definitions;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,19 +12,65 @@ namespace BP.StoredProcedures
 {
     public class VehicleSP
     {
-        private readonly BPContext BPContext;
-        public VehicleSP(BPContext BPContext)
+        private readonly DataSettings dataSettings;
+        public VehicleSP(DataSettings dataSettings)
         {
-            this.BPContext = BPContext;
+            this.dataSettings = dataSettings;
         }
 
-        public async Task<bool> AddVehicleAsync(Vehicle vehicle)
+        public async Task<Guid> AddVehicleAsync(Vehicle vehicle)
         {
-            return await BPContext.Customers.FromSqlRaw($"EXECUTE {VehicleSPDefinitions.AddVehicle} \'{vehicle.VehicleID}\', \'{vehicle.Type}\', \'{vehicle.NumberPlate}\', \'{vehicle.Colour}\', \'{vehicle.AdultSeats}\', \'{vehicle.InfantSeats}\', \'{vehicle.BootCapacity}\', \'{vehicle.IsShared}\', \'{vehicle.IsActive}\'").AnyAsync();
+            SqlConnection conn = new SqlConnection();
+            SqlCommand cmd = new SqlCommand();
+            conn.ConnectionString = dataSettings.ConnectionString;
+            cmd.Connection = conn;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = VehicleSPDefinitions.AddVehicle;
+
+            cmd.Parameters.AddWithValue("@Type", vehicle.Type);
+            cmd.Parameters.AddWithValue("@NumberPlate", vehicle.NumberPlate);
+            cmd.Parameters.AddWithValue("@Colour", vehicle.Colour);
+            cmd.Parameters.AddWithValue("@AdultSeats", vehicle.AdultSeats);
+            cmd.Parameters.AddWithValue("@InfantSeats", vehicle.InfantSeats);
+            cmd.Parameters.AddWithValue("@BootCapacity", vehicle.BootCapacity);
+            cmd.Parameters.AddWithValue("@IsShared", vehicle.IsShared);
+
+            cmd.Parameters.Add("@VehicleID", SqlDbType.UniqueIdentifier);
+            cmd.Parameters["@VehicleID"].Direction = ParameterDirection.Output;
+
+            try
+            {
+                conn.Open();
+                await cmd.ExecuteNonQueryAsync();
+                return (Guid)cmd.Parameters["@VehicleID"].Value;
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
-        public async Task<bool> MoveVehicleAsync(Vehicle vehicle)
+        public async Task MoveVehicleAsync(Vehicle vehicle)
         {
-            return await BPContext.Customers.FromSqlRaw($"EXECUTE {VehicleSPDefinitions.MoveVehicle} \'{vehicle.VehicleID}\', \'{vehicle.CurrentLat}\', \'{vehicle.CurrentLng}\'").AnyAsync(); 
+            SqlConnection conn = new SqlConnection();
+            SqlCommand cmd = new SqlCommand();
+            conn.ConnectionString = dataSettings.ConnectionString;
+            cmd.Connection = conn;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = VehicleSPDefinitions.MoveVehicle;
+
+            cmd.Parameters.AddWithValue("@VehicleID", vehicle.VehicleID);
+            cmd.Parameters.AddWithValue("@CurrentLat", vehicle.CurrentLat);
+            cmd.Parameters.AddWithValue("@CurrentLng", vehicle.CurrentLng);
+
+            try
+            {
+                conn.Open();
+                await cmd.ExecuteNonQueryAsync();
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
     }
 }

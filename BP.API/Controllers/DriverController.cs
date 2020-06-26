@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BP.Controllers
 {
+    [Produces("application/json")]
     [Route("api/driver")]
     [ApiController]
     public class DriverController : ControllerBase
@@ -24,9 +25,16 @@ namespace BP.Controllers
         }
 
         [HttpGet("add")]
-        public async Task<Guid> AddDriverAsync([FromBody] DriverDTO.AddDriverDTO value)
+        public async Task<IActionResult> AddDriverAsync([FromBody] DriverDTO.AddDriverDTO value)
         {
-            return await driverRepository.AddDriverAsync(driverDTOConverter.Convert(value));
+            try
+            {
+                return Ok(await driverRepository.AddDriverAsync(driverDTOConverter.Convert(value)));
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
         }
     }
 }

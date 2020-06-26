@@ -15,7 +15,7 @@ namespace BP.Entities
         public double StartLocationLng { get; set; }
         public double? EndLocationLat { get; set; }
         public double? EndLocationLng { get; set; }
-        public bool IsActive { get; set; }
+        public bool? IsActive { get; set; }
 
         public Guid CustomerID { get; set; }
         public Customer Customer { get; set; }

@@ -18,29 +18,29 @@ namespace BP.StoredProcedures.Definitions
         {
             Definitions[AddVehicleRent] =
                 @"CREATE PROCEDURE [dbo].[AddVehicleRent]
-                        @VehicleRentID uniqueidentifier,
                         @TimeFrom datetime2(7),
                         @TimeUntil datetime2(7),
                         @IsOwned bit,
                         @VehicleID uniqueidentifier,
-                        @DriverID uniqueidentifier
+                        @DriverID uniqueidentifier,
+                        @VehicleRentID uniqueidentifier OUTPUT
                     AS
                     BEGIN
+                        SET NOCOUNT ON; 
+						DECLARE @returnVehicleRentID TABLE (id uniqueidentifier);
                         INSERT INTO [dbo].[VehicleRents]  
-                            (VehicleRentID,  
-                             TimeFrom,  
+                            (TimeFrom,  
                              TimeUntil,
                              IsOwned,
                              VehicleID,
                              DriverID)
-  
-                        VALUES ( 
-                             @VehicleRentID,  
-                             @TimeFrom,  
+      				    OUTPUT inserted.VehicleRentID INTO @returnVehicleRentID
+                        VALUES (@TimeFrom,  
                              @TimeUntil,  
                              @IsOwned,
                              @VehicleID,
-                             @DriverID)  
+                             @DriverID);
+                        SELECT @VehicleRentID = r.id from @returnVehicleRentID r;
                     END";
         }
     }

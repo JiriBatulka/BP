@@ -21,10 +21,7 @@ namespace BP.Repositories
 
         public async Task<Guid> AddDriverAsync(Driver driver)
         {
-            if (driver.DriverID == null || driver.DriverID == new Guid())
-                driver.DriverID = Guid.NewGuid();
-            await driverSP.AddDriverAsync(driverConverter.Convert(driver));
-            return driver.DriverID;
+            return await driverSP.AddDriverAsync(driverConverter.Convert(driver));
         }
     }
 }

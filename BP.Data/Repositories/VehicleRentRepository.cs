@@ -21,10 +21,7 @@ namespace BP.Repositories
 
         public async Task<Guid> AddVehicleRentAsync(VehicleRent vehicleRent)
         {
-            if (vehicleRent.VehicleRentID == null || vehicleRent.VehicleRentID == new Guid())
-                vehicleRent.VehicleRentID = Guid.NewGuid();
-            await vehicleRentSP.AddVehicleRentAsync(vehicleRentConverter.Convert(vehicleRent));
-            return vehicleRent.VehicleRentID;
+            return await vehicleRentSP.AddVehicleRentAsync(vehicleRentConverter.Convert(vehicleRent));
         }
     }
 }

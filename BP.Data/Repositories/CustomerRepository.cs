@@ -20,15 +20,12 @@ namespace BP.Repositories
 
         public async Task<Guid> AddCustomerAsync(Models.Customer customer)
         {
-            if (customer.CustomerID == null || customer.CustomerID == new Guid())
-                customer.CustomerID = Guid.NewGuid();
-            await customerSP.AddCustomerAsync(customerConverter.Convert(customer));
-            return customer.CustomerID;
+            return await customerSP.AddCustomerAsync(customerConverter.Convert(customer));
         }
 
-        public async Task<bool> MoveCustomerAsync(Models.Customer customer)
+        public async Task MoveCustomerAsync(Models.Customer customer)
         {
-            return await customerSP.MoveCustomerAsync(customerConverter.Convert(customer));
+            await customerSP.MoveCustomerAsync(customerConverter.Convert(customer));
         }
     }
 }

@@ -18,7 +18,6 @@ namespace BP.StoredProcedures.Definitions
         {
             Definitions[AddOrder] =
                 @"CREATE PROCEDURE [dbo].[AddOrder]
-                        @OrderID uniqueidentifier,
                         @StartTime datetime2(7),
                         @VehicleArriveEstimate datetime2(7),
                         @EndTimeEstimate datetime2(7),
@@ -28,12 +27,13 @@ namespace BP.StoredProcedures.Definitions
                         @EndLocationLng float,
                         @CustomerID uniqueidentifier,
                         @VehicleID uniqueidentifier,
-                        @IsActive bit)
+                        @OrderID uniqueidentifier OUTPUT
                     AS
                     BEGIN
+                        SET NOCOUNT ON; 
+						DECLARE @returnOrderID TABLE (id uniqueidentifier);
                         INSERT INTO [dbo].[Orders]  
-                            (OrderID,  
-                             StartTime,  
+                            (StartTime,  
                              VehicleArriveEstimate,
                              EndTimeEstimate,
                              StartLocationLat,
@@ -41,12 +41,9 @@ namespace BP.StoredProcedures.Definitions
                              EndLocationLat,
                              EndLocationLng,
                              CustomerID,
-                             VehicleID,
-                             IsActive)
-  
-                        VALUES ( 
-                             @OrderID,  
-                             @StartTime,  
+                             VehicleID)
+    				    OUTPUT inserted.OrderID INTO @returnOrderID
+                        VALUES (@StartTime,  
                              @VehicleArriveEstimate,
                              @EndTimeEstimate,  
                              @StartLocationLat,
@@ -54,8 +51,8 @@ namespace BP.StoredProcedures.Definitions
                              @EndLocationLat,
                              @EndLocationLng,
                              @CustomerID,
-                             @VehicleID,
-                             @IsActive)  
+                             @VehicleID);
+                        SELECT @OrderID = r.id from @returnOrderID r;
                     END";
         }
     }

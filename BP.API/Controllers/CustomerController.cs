@@ -32,7 +32,7 @@ namespace BP.Controllers
             {
                 return Ok(await customerRepository.AddCustomerAsync(customerDTOConverter.Convert(value)));
             }
-            catch (Exception ex)
+            catch
             {
                 return StatusCode(500);
             }
@@ -43,7 +43,8 @@ namespace BP.Controllers
         {
             try
             {
-                return Ok(await customerRepository.MoveCustomerAsync(customerDTOConverter.Convert(value)));
+                await customerRepository.MoveCustomerAsync(customerDTOConverter.Convert(value));
+                return Ok();
             }
             catch
             {

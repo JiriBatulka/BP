@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BP.Migrations
 {
     [DbContext(typeof(BPContext))]
-    [Migration("20200622151317_AddProcedures")]
-    partial class AddProcedures
+    [Migration("20200626094516_CreateProcedures")]
+    partial class CreateProcedures
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -25,7 +25,8 @@ namespace BP.Migrations
                 {
                     b.Property<Guid>("CustomerID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<double?>("CurrentLat")
                         .HasColumnType("float");
@@ -37,6 +38,9 @@ namespace BP.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(31)")
                         .HasMaxLength(31);
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -57,7 +61,8 @@ namespace BP.Migrations
                 {
                     b.Property<Guid>("DriverID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -83,7 +88,8 @@ namespace BP.Migrations
                 {
                     b.Property<Guid>("OrderID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<Guid>("CustomerID")
                         .HasColumnType("uniqueidentifier");
@@ -94,8 +100,13 @@ namespace BP.Migrations
                     b.Property<double?>("EndLocationLng")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("EndTimeEstimate")
+                    b.Property<DateTime?>("EndTimeEstimate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool?>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.Property<double>("StartLocationLat")
                         .HasColumnType("float");
@@ -125,7 +136,8 @@ namespace BP.Migrations
                 {
                     b.Property<Guid>("VehicleID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<int>("AdultSeats")
                         .HasColumnType("int");
@@ -146,6 +158,9 @@ namespace BP.Migrations
 
                     b.Property<int>("InfantSeats")
                         .HasColumnType("int");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsShared")
                         .HasColumnType("bit");
@@ -169,7 +184,8 @@ namespace BP.Migrations
                 {
                     b.Property<Guid>("VehicleRentID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<Guid>("DriverID")
                         .HasColumnType("uniqueidentifier");

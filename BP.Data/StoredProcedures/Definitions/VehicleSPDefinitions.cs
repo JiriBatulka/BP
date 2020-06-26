@@ -16,11 +16,10 @@ namespace BP.StoredProcedures.Definitions
             CreateMoveVehicle();
         }
 
-        private static void CreateMoveVehicle()
+        private static void CreateAddVehicle()
         {
-            Definitions[MoveVehicle] =
+            Definitions[AddVehicle] =
                 @"CREATE PROCEDURE [dbo].[AddVehicle]
-                        @VehicleID uniqueidentifier,
                         @Type nvarchar(63),
                         @NumberPlate nvarchar(31),
                         @Colour nvarchar(15),
@@ -28,34 +27,32 @@ namespace BP.StoredProcedures.Definitions
                         @InfantSeats int,
                         @BootCapacity int,
                         @IsShared bit,
-                        @IsActive bit
+                        @VehicleID uniqueidentifier OUTPUT
                     AS
                     BEGIN
-                        INSERT INTO [dbo].[Vehicles] (
-                             VehicleID,  
-                             Type,  
+                        SET NOCOUNT ON; 
+						DECLARE @returnVehicleID TABLE (id uniqueidentifier);
+                        INSERT INTO [dbo].[Vehicles] 
+                            (Type,  
                              NumberPlate,  
                              Colour,
                              AdultSeats,  
                              InfantSeats,  
                              BootCapacity,  
-                             IsShared,
-                             IsActive)
-  
-                        VALUES ( 
-                             @VehicleID,  
-                             @Type,  
+                             IsShared)
+        				OUTPUT inserted.VehicleID INTO @returnVehicleID
+                        VALUES (@Type,  
                              @NumberPlate,  
                              @Colour,
                              @AdultSeats,  
                              @InfantSeats,  
                              @BootCapacity,  
-                             @IsShared,
-                             @IsActive)
+                             @IsShared);
+                        SELECT @VehicleID = r.id from @returnVehicleID r;
                     END";
         }
 
-        private static void CreateAddVehicle()
+        private static void CreateMoveVehicle()
         {
             Definitions[MoveVehicle] =
                 @"CREATE PROCEDURE [dbo].[MoveVehicle]

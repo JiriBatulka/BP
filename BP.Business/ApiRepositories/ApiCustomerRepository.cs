@@ -10,7 +10,7 @@ namespace BP.ApiRepositories
 {
     public class ApiCustomerRepository : IApiCustomerRepository
     {
-        private ICustomerRepository customerRepository;
+        private readonly ICustomerRepository customerRepository;
 
         public ApiCustomerRepository(ICustomerRepository customerRepository)
         {
@@ -19,12 +19,11 @@ namespace BP.ApiRepositories
 
         public async Task<Guid> AddCustomerAsync(Customer customer)
         {
-            customer.IsActive = true;
             return await customerRepository.AddCustomerAsync(customer);
         }
-        public async Task<bool> MoveCustomerAsync(Customer customer)
+        public async Task MoveCustomerAsync(Customer customer)
         {
-            return await customerRepository.MoveCustomerAsync(customer);
+            await customerRepository.MoveCustomerAsync(customer);
         }
     }
 }

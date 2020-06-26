@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BP.Migrations
 {
-    public partial class AddProcedures : Migration
+    public partial class CreateProcedures : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

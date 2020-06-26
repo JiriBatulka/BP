@@ -39,8 +39,11 @@ namespace BP.API
             services.AddTransient<CustomerDTOConverter>();
             services.AddTransient<CustomerConverter>();
             services.AddTransient<CustomerSP>();
-            services.AddDbContext<BPContext>
-                (options => options.UseSqlServer(Configuration.GetConnectionString("BPDatabase")));
+            services.AddDbContext<BPContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BPDatabase")), ServiceLifetime.Transient);
+            services.AddTransient(serviceProvider =>
+            {
+                return new DataSettings(Configuration.GetConnectionString("BPDatabase"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

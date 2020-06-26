@@ -18,23 +18,23 @@ namespace BP.StoredProcedures.Definitions
         {
             Definitions["AddDriver"] =
                 @"CREATE PROCEDURE [dbo].[AddDriver]
-                        @DriverID uniqueidentifier,
                         @FirstName nvarchar(31),
                         @Surname nvarchar(31),
-                        @PhoneNumber nvarchar(15)
+                        @PhoneNumber nvarchar(15),
+                        @DriverID uniqueidentifier OUTPUT
                     AS
                     BEGIN
+                        SET NOCOUNT ON; 
+						DECLARE @returnDriverID TABLE (id uniqueidentifier);
                         INSERT INTO [dbo].[Drivers]  
-                            (DriverID,  
-                             FirstName,  
+                            (FirstName,  
                              Surname,  
                              PhoneNumber)
-  
-                        VALUES ( 
-                             @DriverID,  
-                             @FirstName,  
+  						OUTPUT inserted.DriverID INTO @returnDriverID
+                        VALUES (@FirstName,  
                              @Surname,  
-                             @PhoneNumber)  
+                             @PhoneNumber);
+                        SELECT @DriverID = r.id from @returnDriverID r;
                     END";
         }
     }

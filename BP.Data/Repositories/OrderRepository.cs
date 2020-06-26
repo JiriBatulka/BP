@@ -21,10 +21,7 @@ namespace BP.Repositories
 
         public async Task<Guid> AddOrderAsync(Order order)
         {
-            if (order.OrderID == null || order.OrderID == new Guid())
-                order.OrderID = Guid.NewGuid();
-            await orderSP.AddOrderAsync(orderConverter.Convert(order));
-            return order.OrderID;
+            return await orderSP.AddOrderAsync(orderConverter.Convert(order));
         }
     }
 }

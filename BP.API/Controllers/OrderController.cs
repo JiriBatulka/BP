@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BP.Controllers
 {
+    [Produces("application/json")]
     [Route("api/order")]
     [ApiController]
     public class OrderController : ControllerBase
@@ -24,9 +25,16 @@ namespace BP.Controllers
         }
 
         [HttpGet("add")]
-        public async Task<Guid> AddOrderAsync([FromBody] OrderDTO.AddOrderDTO value)
+        public async Task<IActionResult> AddOrderAsync([FromBody] OrderDTO.AddOrderDTO value)
         {
-            return await orderRepository.AddOrderAsync(orderDTOConverter.Convert(value));
+            try
+            {
+                return Ok(await orderRepository.AddOrderAsync(orderDTOConverter.Convert(value)));
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
         }
     }
 }

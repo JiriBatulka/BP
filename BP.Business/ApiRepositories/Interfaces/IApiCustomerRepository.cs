@@ -9,6 +9,6 @@ namespace BP.ApiRepositories.Interfaces
     public interface IApiCustomerRepository
     {
         public Task<Guid> AddCustomerAsync(Customer customer);
-        public Task<bool> MoveCustomerAsync(Customer customer);
+        public Task MoveCustomerAsync(Customer customer);
     }
 }

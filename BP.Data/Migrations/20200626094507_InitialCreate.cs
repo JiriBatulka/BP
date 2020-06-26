@@ -11,12 +11,13 @@ namespace BP.Migrations
                 name: "Customers",
                 columns: table => new
                 {
-                    CustomerID = table.Column<Guid>(nullable: false),
+                    CustomerID = table.Column<Guid>(nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     FirstName = table.Column<string>(maxLength: 31, nullable: false),
                     Surname = table.Column<string>(maxLength: 31, nullable: false),
                     PhoneNumber = table.Column<string>(maxLength: 15, nullable: false),
                     CurrentLat = table.Column<double>(nullable: true),
-                    CurrentLng = table.Column<double>(nullable: true)
+                    CurrentLng = table.Column<double>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -27,7 +28,7 @@ namespace BP.Migrations
                 name: "Drivers",
                 columns: table => new
                 {
-                    DriverID = table.Column<Guid>(nullable: false),
+                    DriverID = table.Column<Guid>(nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     FirstName = table.Column<string>(maxLength: 31, nullable: false),
                     Surname = table.Column<string>(maxLength: 31, nullable: false),
                     PhoneNumber = table.Column<string>(maxLength: 15, nullable: false)
@@ -41,7 +42,7 @@ namespace BP.Migrations
                 name: "Vehicles",
                 columns: table => new
                 {
-                    VehicleID = table.Column<Guid>(nullable: false),
+                    VehicleID = table.Column<Guid>(nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     Type = table.Column<string>(maxLength: 63, nullable: false),
                     NumberPlate = table.Column<string>(maxLength: 31, nullable: false),
                     Colour = table.Column<string>(maxLength: 15, nullable: false),
@@ -50,7 +51,8 @@ namespace BP.Migrations
                     BootCapacity = table.Column<int>(nullable: false),
                     CurrentLat = table.Column<double>(nullable: true),
                     CurrentLng = table.Column<double>(nullable: true),
-                    IsShared = table.Column<bool>(nullable: false)
+                    IsShared = table.Column<bool>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -61,14 +63,15 @@ namespace BP.Migrations
                 name: "Orders",
                 columns: table => new
                 {
-                    OrderID = table.Column<Guid>(nullable: false),
+                    OrderID = table.Column<Guid>(nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     StartTime = table.Column<DateTime>(nullable: false),
                     VehicleArriveEstimate = table.Column<DateTime>(nullable: false),
-                    EndTimeEstimate = table.Column<DateTime>(nullable: false),
+                    EndTimeEstimate = table.Column<DateTime>(nullable: true),
                     StartLocationLat = table.Column<double>(nullable: false),
                     StartLocationLng = table.Column<double>(nullable: false),
                     EndLocationLat = table.Column<double>(nullable: true),
                     EndLocationLng = table.Column<double>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: true, defaultValue: true),
                     CustomerID = table.Column<Guid>(nullable: false),
                     VehicleID = table.Column<Guid>(nullable: false)
                 },
@@ -93,7 +96,7 @@ namespace BP.Migrations
                 name: "VehicleRents",
                 columns: table => new
                 {
-                    VehicleRentID = table.Column<Guid>(nullable: false),
+                    VehicleRentID = table.Column<Guid>(nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     TimeFrom = table.Column<DateTime>(nullable: true),
                     TimeUntil = table.Column<DateTime>(nullable: true),
                     IsOwned = table.Column<bool>(nullable: false),
