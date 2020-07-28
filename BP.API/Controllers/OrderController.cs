@@ -15,13 +15,13 @@ namespace BP.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        private readonly IApiOrderRepository orderRepository;
-        private readonly OrderDTOConverter orderDTOConverter;
+        private readonly IApiOrderRepository _orderRepository;
+        private readonly OrderDTOConverter _orderDTOConverter;
 
         public OrderController(IApiOrderRepository orderRepository, OrderDTOConverter orderDTOConverter)
         {
-            this.orderRepository = orderRepository;
-            this.orderDTOConverter = orderDTOConverter;
+            _orderRepository = orderRepository;
+            _orderDTOConverter = orderDTOConverter;
         }
 
         [HttpGet("add")]
@@ -29,7 +29,8 @@ namespace BP.Controllers
         {
             try
             {
-                return Ok(await orderRepository.AddOrderAsync(orderDTOConverter.Convert(value)));
+                await _orderRepository.AddOrderAsync(_orderDTOConverter.Convert(value));
+                return Ok();
             }
             catch
             {

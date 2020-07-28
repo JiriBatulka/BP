@@ -12,17 +12,17 @@ namespace BP.StoredProcedures
 {
     public class OrderSP
     {
-        private readonly DataSettings dataSettings;
+        private readonly DataSettings _dataSettings;
         public OrderSP(DataSettings dataSettings)
         {
-            this.dataSettings = dataSettings;
+            _dataSettings = dataSettings;
         }
 
-        public async Task<Guid> AddOrderAsync(Order order)
+        public async Task AddOrderAsync(Order order)
         {
             SqlConnection conn = new SqlConnection();
             SqlCommand cmd = new SqlCommand();
-            conn.ConnectionString = dataSettings.ConnectionString;
+            conn.ConnectionString = _dataSettings.ConnectionString;
             cmd.Connection = conn;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = OrderSPDefinitions.AddOrder;
@@ -37,14 +37,10 @@ namespace BP.StoredProcedures
             cmd.Parameters.AddWithValue("@CustomerID", order.CustomerID);
             cmd.Parameters.AddWithValue("@VehicleID", order.VehicleID);
 
-            cmd.Parameters.Add("@OrderID", SqlDbType.UniqueIdentifier);
-            cmd.Parameters["@OrderID"].Direction = ParameterDirection.Output;
-
             try
             {
                 conn.Open();
                 await cmd.ExecuteNonQueryAsync();
-                return (Guid)cmd.Parameters["@OrderID"].Value;
             }
             finally
             {

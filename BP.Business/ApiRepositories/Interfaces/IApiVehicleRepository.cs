@@ -8,7 +8,7 @@ namespace BP.ApiRepositories.Interfaces
 {
     public interface IApiVehicleRepository
     {
-        public Task<Guid> AddVehicleAsync(Vehicle vehicle);
+        public Task AddVehicleAsync(Vehicle vehicle);
         public Task MoveVehicleAsync(Vehicle vehicle);
     }
 }

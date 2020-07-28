@@ -10,16 +10,16 @@ namespace BP.ApiRepositories
 {
     public class ApiVehicleRentRepository : IApiVehicleRentRepository
     {
-        private readonly IVehicleRentRepository vehicleRentRepository;
+        private readonly IVehicleRentRepository _vehicleRentRepository;
 
         public ApiVehicleRentRepository(IVehicleRentRepository vehicleRentRepository)
         {
-            this.vehicleRentRepository = vehicleRentRepository;
+            _vehicleRentRepository = vehicleRentRepository;
         }
 
-        public async Task<Guid> AddVehicleRentAsync(VehicleRent vehicleRent)
+        public async Task AddVehicleRentAsync(VehicleRent vehicleRent)
         {
-            return await vehicleRentRepository.AddVehicleRentAsync(vehicleRent);
+            await _vehicleRentRepository.AddVehicleRentAsync(vehicleRent);
         }
     }
 }

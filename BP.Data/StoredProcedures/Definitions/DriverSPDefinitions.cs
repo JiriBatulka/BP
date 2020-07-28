@@ -20,21 +20,17 @@ namespace BP.StoredProcedures.Definitions
                 @"CREATE PROCEDURE [dbo].[AddDriver]
                         @FirstName nvarchar(31),
                         @Surname nvarchar(31),
-                        @PhoneNumber nvarchar(15),
-                        @DriverID uniqueidentifier OUTPUT
+                        @PhoneNumber nvarchar(15)
                     AS
                     BEGIN
                         SET NOCOUNT ON; 
-						DECLARE @returnDriverID TABLE (id uniqueidentifier);
                         INSERT INTO [dbo].[Drivers]  
                             (FirstName,  
                              Surname,  
                              PhoneNumber)
-  						OUTPUT inserted.DriverID INTO @returnDriverID
                         VALUES (@FirstName,  
                              @Surname,  
                              @PhoneNumber);
-                        SELECT @DriverID = r.id from @returnDriverID r;
                     END";
         }
     }

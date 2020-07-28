@@ -11,17 +11,17 @@ namespace BP.Repositories
 {
     public class OrderRepository : IOrderRepository
     {
-        private readonly OrderConverter orderConverter;
-        private readonly OrderSP orderSP;
+        private readonly OrderConverter _orderConverter;
+        private readonly OrderSP _orderSP;
         public OrderRepository(OrderSP orderSP, OrderConverter orderConverter)
         {
-            this.orderSP = orderSP;
-            this.orderConverter = orderConverter;
+            _orderSP = orderSP;
+            _orderConverter = orderConverter;
         }
 
-        public async Task<Guid> AddOrderAsync(Order order)
+        public async Task AddOrderAsync(Order order)
         {
-            return await orderSP.AddOrderAsync(orderConverter.Convert(order));
+            await _orderSP.AddOrderAsync(_orderConverter.Convert(order));
         }
     }
 }

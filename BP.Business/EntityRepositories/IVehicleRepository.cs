@@ -8,7 +8,7 @@ namespace BP.EntityRepositories
 {
     public interface IVehicleRepository
     {
-        public Task<Guid> AddVehicleAsync(Vehicle vehicle);
+        public Task AddVehicleAsync(Vehicle vehicle);
         public Task MoveVehicleAsync(Vehicle vehicle);
     }
 }

@@ -5,4 +5,8 @@
     <RootNamespace>BP</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BP.Shared\BP.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -12,17 +12,17 @@ namespace BP.StoredProcedures
 {
     public class VehicleRentSP
     {
-        private readonly DataSettings dataSettings;
+        private readonly DataSettings _dataSettings;
         public VehicleRentSP(DataSettings dataSettings)
         {
-            this.dataSettings = dataSettings;
+            _dataSettings = dataSettings;
         }
 
-        public async Task<Guid> AddVehicleRentAsync(VehicleRent vehicleRent)
+        public async Task AddVehicleRentAsync(VehicleRent vehicleRent)
         {
             SqlConnection conn = new SqlConnection();
             SqlCommand cmd = new SqlCommand();
-            conn.ConnectionString = dataSettings.ConnectionString;
+            conn.ConnectionString = _dataSettings.ConnectionString;
             cmd.Connection = conn;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = VehicleRentSPDefinitions.AddVehicleRent;
@@ -33,14 +33,10 @@ namespace BP.StoredProcedures
             cmd.Parameters.AddWithValue("@DriverID", vehicleRent.DriverID);
             cmd.Parameters.AddWithValue("@VehicleID", vehicleRent.VehicleID);
 
-            cmd.Parameters.Add("@VehicleRentID", SqlDbType.UniqueIdentifier);
-            cmd.Parameters["@VehicleRentID"].Direction = ParameterDirection.Output;
-
             try
             {
                 conn.Open();
                 await cmd.ExecuteNonQueryAsync();
-                return (Guid)cmd.Parameters["@VehicleRentID"].Value;
             }
             finally
             {

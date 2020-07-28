@@ -10,20 +10,24 @@ namespace BP.ApiRepositories
 {
     public class ApiCustomerRepository : IApiCustomerRepository
     {
-        private readonly ICustomerRepository customerRepository;
+        private readonly ICustomerRepository _customerRepository;
+        private readonly IUserIdentityRepository _userIdentityRepository;
 
-        public ApiCustomerRepository(ICustomerRepository customerRepository)
+        public ApiCustomerRepository(ICustomerRepository customerRepository, IUserIdentityRepository userIdentityRepository)
         {
-            this.customerRepository = customerRepository;
+            _customerRepository = customerRepository;
+            _userIdentityRepository = userIdentityRepository;
         }
 
-        public async Task<Guid> AddCustomerAsync(Customer customer)
+        public async Task AddCustomerAsync(Customer customer)
         {
-            return await customerRepository.AddCustomerAsync(customer);
+            customer.UserIdentityID = await _userIdentityRepository.AddUserIdentityAsync(customer);
+            await _customerRepository.AddCustomerAsync(customer);
         }
+
         public async Task MoveCustomerAsync(Customer customer)
         {
-            await customerRepository.MoveCustomerAsync(customer);
+            await _customerRepository.MoveCustomerAsync(customer);
         }
     }
 }

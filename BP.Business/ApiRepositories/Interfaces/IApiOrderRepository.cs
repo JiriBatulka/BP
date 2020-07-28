@@ -8,6 +8,6 @@ namespace BP.ApiRepositories.Interfaces
 {
     public interface IApiOrderRepository
     {
-        public Task<Guid> AddOrderAsync(Order order);
+        public Task AddOrderAsync(Order order);
     }
 }

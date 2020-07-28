@@ -27,11 +27,9 @@ namespace BP.StoredProcedures.Definitions
                         @InfantSeats int,
                         @BootCapacity int,
                         @IsShared bit,
-                        @VehicleID uniqueidentifier OUTPUT
                     AS
                     BEGIN
                         SET NOCOUNT ON; 
-						DECLARE @returnVehicleID TABLE (id uniqueidentifier);
                         INSERT INTO [dbo].[Vehicles] 
                             (Type,  
                              NumberPlate,  
@@ -40,7 +38,6 @@ namespace BP.StoredProcedures.Definitions
                              InfantSeats,  
                              BootCapacity,  
                              IsShared)
-        				OUTPUT inserted.VehicleID INTO @returnVehicleID
                         VALUES (@Type,  
                              @NumberPlate,  
                              @Colour,
@@ -48,7 +45,6 @@ namespace BP.StoredProcedures.Definitions
                              @InfantSeats,  
                              @BootCapacity,  
                              @IsShared);
-                        SELECT @VehicleID = r.id from @returnVehicleID r;
                     END";
         }
 

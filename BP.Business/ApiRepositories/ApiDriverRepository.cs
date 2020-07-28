@@ -10,16 +10,16 @@ namespace BP.ApiRepositories
 {
     public class ApiDriverRepository : IApiDriverRepository
     {
-        private readonly IDriverRepository driverRepository;
+        private readonly IDriverRepository _driverRepository;
 
         public ApiDriverRepository(IDriverRepository driverRepository)
         {
-            this.driverRepository = driverRepository;
+            _driverRepository = driverRepository;
         }
 
-        public async Task<Guid> AddDriverAsync(Driver driver)
+        public async Task AddDriverAsync(Driver driver)
         {
-            return await driverRepository.AddDriverAsync(driver);
+            await _driverRepository.AddDriverAsync(driver);
         }
     }
 }

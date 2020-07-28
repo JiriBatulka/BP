@@ -12,17 +12,17 @@ namespace BP.StoredProcedures
 {
     public class VehicleSP
     {
-        private readonly DataSettings dataSettings;
+        private readonly DataSettings _dataSettings;
         public VehicleSP(DataSettings dataSettings)
         {
-            this.dataSettings = dataSettings;
+            _dataSettings = dataSettings;
         }
 
-        public async Task<Guid> AddVehicleAsync(Vehicle vehicle)
+        public async Task AddVehicleAsync(Vehicle vehicle)
         {
             SqlConnection conn = new SqlConnection();
             SqlCommand cmd = new SqlCommand();
-            conn.ConnectionString = dataSettings.ConnectionString;
+            conn.ConnectionString = _dataSettings.ConnectionString;
             cmd.Connection = conn;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = VehicleSPDefinitions.AddVehicle;
@@ -35,14 +35,10 @@ namespace BP.StoredProcedures
             cmd.Parameters.AddWithValue("@BootCapacity", vehicle.BootCapacity);
             cmd.Parameters.AddWithValue("@IsShared", vehicle.IsShared);
 
-            cmd.Parameters.Add("@VehicleID", SqlDbType.UniqueIdentifier);
-            cmd.Parameters["@VehicleID"].Direction = ParameterDirection.Output;
-
             try
             {
                 conn.Open();
                 await cmd.ExecuteNonQueryAsync();
-                return (Guid)cmd.Parameters["@VehicleID"].Value;
             }
             finally
             {
@@ -53,7 +49,7 @@ namespace BP.StoredProcedures
         {
             SqlConnection conn = new SqlConnection();
             SqlCommand cmd = new SqlCommand();
-            conn.ConnectionString = dataSettings.ConnectionString;
+            conn.ConnectionString = _dataSettings.ConnectionString;
             cmd.Connection = conn;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = VehicleSPDefinitions.MoveVehicle;

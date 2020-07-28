@@ -23,24 +23,20 @@ namespace BP.StoredProcedures.Definitions
                         @IsOwned bit,
                         @VehicleID uniqueidentifier,
                         @DriverID uniqueidentifier,
-                        @VehicleRentID uniqueidentifier OUTPUT
                     AS
                     BEGIN
                         SET NOCOUNT ON; 
-						DECLARE @returnVehicleRentID TABLE (id uniqueidentifier);
                         INSERT INTO [dbo].[VehicleRents]  
                             (TimeFrom,  
                              TimeUntil,
                              IsOwned,
                              VehicleID,
                              DriverID)
-      				    OUTPUT inserted.VehicleRentID INTO @returnVehicleRentID
                         VALUES (@TimeFrom,  
                              @TimeUntil,  
                              @IsOwned,
                              @VehicleID,
                              @DriverID);
-                        SELECT @VehicleRentID = r.id from @returnVehicleRentID r;
                     END";
         }
     }

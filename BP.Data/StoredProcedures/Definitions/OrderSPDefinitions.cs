@@ -26,12 +26,10 @@ namespace BP.StoredProcedures.Definitions
                         @EndLocationLat float,
                         @EndLocationLng float,
                         @CustomerID uniqueidentifier,
-                        @VehicleID uniqueidentifier,
-                        @OrderID uniqueidentifier OUTPUT
+                        @VehicleID uniqueidentifier
                     AS
                     BEGIN
                         SET NOCOUNT ON; 
-						DECLARE @returnOrderID TABLE (id uniqueidentifier);
                         INSERT INTO [dbo].[Orders]  
                             (StartTime,  
                              VehicleArriveEstimate,
@@ -42,7 +40,6 @@ namespace BP.StoredProcedures.Definitions
                              EndLocationLng,
                              CustomerID,
                              VehicleID)
-    				    OUTPUT inserted.OrderID INTO @returnOrderID
                         VALUES (@StartTime,  
                              @VehicleArriveEstimate,
                              @EndTimeEstimate,  
@@ -52,7 +49,6 @@ namespace BP.StoredProcedures.Definitions
                              @EndLocationLng,
                              @CustomerID,
                              @VehicleID);
-                        SELECT @OrderID = r.id from @returnOrderID r;
                     END";
         }
     }

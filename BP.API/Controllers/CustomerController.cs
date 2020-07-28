@@ -6,6 +6,7 @@ using BP.ApiRepositories.Interfaces;
 using BP.Converters;
 using BP.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,13 +17,15 @@ namespace BP.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        private readonly IApiCustomerRepository customerRepository;
-        private readonly CustomerDTOConverter customerDTOConverter;
+        private readonly IApiCustomerRepository _customerRepository;
+        private readonly CustomerDTOConverter _customerDTOConverter;
+        private readonly CustomLogger _logger;
 
-        public CustomerController(IApiCustomerRepository customerRepository, CustomerDTOConverter customerDTOConverter)
+        public CustomerController(IApiCustomerRepository customerRepository, CustomerDTOConverter customerDTOConverter, CustomLogger logger)
         {
-            this.customerRepository = customerRepository;
-            this.customerDTOConverter = customerDTOConverter;
+            _customerRepository = customerRepository;
+            _customerDTOConverter = customerDTOConverter;
+            _logger = logger;
         }
 
         [HttpGet("add")]
@@ -30,10 +33,12 @@ namespace BP.Controllers
         {
             try
             {
-                return Ok(await customerRepository.AddCustomerAsync(customerDTOConverter.Convert(value)));
+                await _customerRepository.AddCustomerAsync(_customerDTOConverter.Convert(value));
+                return Ok();
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogApiException(ex);
                 return StatusCode(500);
             }
         }
@@ -43,11 +48,12 @@ namespace BP.Controllers
         {
             try
             {
-                await customerRepository.MoveCustomerAsync(customerDTOConverter.Convert(value));
+                await _customerRepository.MoveCustomerAsync(_customerDTOConverter.Convert(value));
                 return Ok();
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogApiException(ex);
                 return StatusCode(500);
             }
         }

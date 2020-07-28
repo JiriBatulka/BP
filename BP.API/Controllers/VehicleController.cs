@@ -15,13 +15,13 @@ namespace BP.Controllers
     [ApiController]
     public class VehicleController : ControllerBase
     {
-        private readonly IApiVehicleRepository vehicleRepository;
-        private readonly VehicleDTOConverter vehicleDTOConverter;
+        private readonly IApiVehicleRepository _vehicleRepository;
+        private readonly VehicleDTOConverter _vehicleDTOConverter;
 
         public VehicleController(IApiVehicleRepository vehicleRepository, VehicleDTOConverter vehicleDTOConverter)
         {
-            this.vehicleRepository = vehicleRepository;
-            this.vehicleDTOConverter = vehicleDTOConverter;
+            _vehicleRepository = vehicleRepository;
+            _vehicleDTOConverter = vehicleDTOConverter;
         }
 
         [HttpGet("add")]
@@ -29,7 +29,8 @@ namespace BP.Controllers
         {
             try
             {
-                return Ok(await vehicleRepository.AddVehicleAsync(vehicleDTOConverter.Convert(value)));
+                await _vehicleRepository.AddVehicleAsync(_vehicleDTOConverter.Convert(value));
+                return Ok();
             }
             catch
             {
@@ -42,7 +43,7 @@ namespace BP.Controllers
         {
             try
             {
-                await vehicleRepository.MoveVehicleAsync(vehicleDTOConverter.Convert(value));
+                await _vehicleRepository.MoveVehicleAsync(_vehicleDTOConverter.Convert(value));
                 return Ok();
             }
             catch

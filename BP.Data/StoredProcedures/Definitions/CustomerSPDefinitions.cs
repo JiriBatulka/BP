@@ -23,21 +23,17 @@ namespace BP.StoredProcedures.Definitions
                     @"CREATE PROCEDURE [dbo].[AddCustomer]
                         @FirstName nvarchar(31),
                         @Surname nvarchar(31),
-                        @PhoneNumber nvarchar(15),
-                        @CustomerID uniqueidentifier OUTPUT
+                        @PhoneNumber nvarchar(15)
                     AS
                     BEGIN
                         SET NOCOUNT ON; 
-						DECLARE @returnCustomerID TABLE (id uniqueidentifier);
                         INSERT INTO [dbo].[Customers]  
                             (FirstName,  
                              Surname,  
                              PhoneNumber)
-						OUTPUT inserted.CustomerID INTO @returnCustomerID
                         VALUES (@FirstName,  
                              @Surname,  
                              @PhoneNumber);
-						SELECT @CustomerID = r.id from @returnCustomerID r;
                     END";
         }
 

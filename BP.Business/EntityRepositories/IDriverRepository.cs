@@ -8,6 +8,6 @@ namespace BP.EntityRepositories
 {
     public interface IDriverRepository
     {
-        public Task<Guid> AddDriverAsync(Driver driver);
+        public Task AddDriverAsync(Driver driver);
     }
 }

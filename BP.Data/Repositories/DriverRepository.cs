@@ -11,17 +11,17 @@ namespace BP.Repositories
 {
     public class DriverRepository : IDriverRepository
     {
-        private readonly DriverConverter driverConverter;
-        private readonly DriverSP driverSP;
+        private readonly DriverConverter _driverConverter;
+        private readonly DriverSP _driverSP;
         public DriverRepository(DriverSP driverSP, DriverConverter driverConverter)
         {
-            this.driverSP = driverSP;
-            this.driverConverter = driverConverter;
+            _driverSP = driverSP;
+            _driverConverter = driverConverter;
         }
 
-        public async Task<Guid> AddDriverAsync(Driver driver)
+        public async Task AddDriverAsync(Driver driver)
         {
-            return await driverSP.AddDriverAsync(driverConverter.Convert(driver));
+            await _driverSP.AddDriverAsync(_driverConverter.Convert(driver));
         }
     }
 }

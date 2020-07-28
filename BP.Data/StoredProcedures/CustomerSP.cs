@@ -12,13 +12,13 @@ namespace BP.StoredProcedures
 {
     public class CustomerSP
     {
-        private readonly DataSettings dataSettings;
+        private readonly DataSettings _dataSettings;
         public CustomerSP(DataSettings dataSettings)
         {
-            this.dataSettings = dataSettings;
+            _dataSettings = dataSettings;
         }
 
-        public async Task<Guid> AddCustomerAsync(Customer customer)
+        public async Task AddCustomerAsync(Customer customer)
         {
             //This is how stored procedure with output parameter is executed:
             //var CustomerID = new SqlParameter();
@@ -29,7 +29,7 @@ namespace BP.StoredProcedures
 
             SqlConnection conn = new SqlConnection();
             SqlCommand cmd = new SqlCommand();
-            conn.ConnectionString = dataSettings.ConnectionString;
+            conn.ConnectionString = _dataSettings.ConnectionString;
             cmd.Connection = conn;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = CustomerSPDefinitions.AddCustomer;
@@ -38,14 +38,10 @@ namespace BP.StoredProcedures
             cmd.Parameters.AddWithValue("@Surname", customer.Surname);
             cmd.Parameters.AddWithValue("@PhoneNumber", customer.PhoneNumber);
 
-            cmd.Parameters.Add("@CustomerID", SqlDbType.UniqueIdentifier);
-            cmd.Parameters["@CustomerID"].Direction = ParameterDirection.Output;
-
             try
             {
                 conn.Open();
                 await cmd.ExecuteNonQueryAsync();
-                return (Guid)cmd.Parameters["@CustomerID"].Value;
             }
             finally
             {
@@ -57,7 +53,7 @@ namespace BP.StoredProcedures
         {
             SqlConnection conn = new SqlConnection();
             SqlCommand cmd = new SqlCommand();
-            conn.ConnectionString = dataSettings.ConnectionString;
+            conn.ConnectionString = _dataSettings.ConnectionString;
             cmd.Connection = conn;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = CustomerSPDefinitions.MoveCustomer;

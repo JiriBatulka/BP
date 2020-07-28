@@ -8,7 +8,7 @@ namespace BP.DTOs
 {
     public class CustomerDTO
     {
-        public class AddCustomerDTO
+        public class AddCustomerDTO : UserIdentityDTO
         {
             [Required]
             public string Surname { get; set; }
@@ -16,6 +16,9 @@ namespace BP.DTOs
             public string FirstName { get; set; }
             [Required]
             public string PhoneNumber { get; set; }
+            [Required]
+            [DataType(DataType.EmailAddress)]
+            public string Email { get; set; }
         }
 
         public class MoveCustomerDTO

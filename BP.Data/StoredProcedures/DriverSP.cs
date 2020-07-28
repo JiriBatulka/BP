@@ -12,17 +12,17 @@ namespace BP.StoredProcedures
 {
     public class DriverSP
     {
-        private readonly DataSettings dataSettings;
+        private readonly DataSettings _dataSettings;
         public DriverSP(DataSettings dataSettings)
         {
-            this.dataSettings = dataSettings;
+            _dataSettings = dataSettings;
         }
 
-        public async Task<Guid> AddDriverAsync(Driver driver)
+        public async Task AddDriverAsync(Driver driver)
         {
             SqlConnection conn = new SqlConnection();
             SqlCommand cmd = new SqlCommand();
-            conn.ConnectionString = dataSettings.ConnectionString;
+            conn.ConnectionString = _dataSettings.ConnectionString;
             cmd.Connection = conn;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = DriverSPDefinitions.AddDriver;
@@ -31,14 +31,10 @@ namespace BP.StoredProcedures
             cmd.Parameters.AddWithValue("@Surname", driver.Surname);
             cmd.Parameters.AddWithValue("@PhoneNumber", driver.PhoneNumber);
 
-            cmd.Parameters.Add("@DriverID", SqlDbType.UniqueIdentifier);
-            cmd.Parameters["@DriverID"].Direction = ParameterDirection.Output;
-
             try
             {
                 conn.Open();
                 await cmd.ExecuteNonQueryAsync();
-                return (Guid)cmd.Parameters["@DriverID"].Value;
             }
             finally
             {

@@ -15,26 +15,27 @@ namespace BP.Controllers
     [ApiController]
     public class VehicleRentController : ControllerBase
     {
-        private readonly IApiVehicleRentRepository vehicleRentRepository;
-        private readonly VehicleRentDTOConverter vehicleRentDTOConverter;
+        private readonly IApiVehicleRentRepository _vehicleRentRepository;
+        private readonly VehicleRentDTOConverter _vehicleRentDTOConverter;
 
         public VehicleRentController(IApiVehicleRentRepository vehicleRentRepository, VehicleRentDTOConverter vehicleRentDTOConverter)
         {
-            this.vehicleRentRepository = vehicleRentRepository;
-            this.vehicleRentDTOConverter = vehicleRentDTOConverter;
+            _vehicleRentRepository = vehicleRentRepository;
+            _vehicleRentDTOConverter = vehicleRentDTOConverter;
         }
 
         [HttpGet("add")]
         public async Task<IActionResult> AddVehicleAsync([FromBody] VehicleRentDTO.AddVehicleRentDTO value)
         {
             try
-            { 
-            return Ok(await vehicleRentRepository.AddVehicleRentAsync(vehicleRentDTOConverter.Convert(value)));
-        }
+            {
+                await _vehicleRentRepository.AddVehicleRentAsync(_vehicleRentDTOConverter.Convert(value));
+                return Ok();
+            }
             catch
             {
                 return StatusCode(500);
-    }
-}
+            }
+        }
     }
 }

@@ -15,13 +15,13 @@ namespace BP.Controllers
     [ApiController]
     public class DriverController : ControllerBase
     {
-        private readonly IApiDriverRepository driverRepository;
-        private readonly DriverDTOConverter driverDTOConverter;
+        private readonly IApiDriverRepository _driverRepository;
+        private readonly DriverDTOConverter _driverDTOConverter;
 
         public DriverController(IApiDriverRepository driverRepository, DriverDTOConverter driverDTOConverter)
         {
-            this.driverRepository = driverRepository;
-            this.driverDTOConverter = driverDTOConverter;
+            _driverRepository = driverRepository;
+            _driverDTOConverter = driverDTOConverter;
         }
 
         [HttpGet("add")]
@@ -29,7 +29,8 @@ namespace BP.Controllers
         {
             try
             {
-                return Ok(await driverRepository.AddDriverAsync(driverDTOConverter.Convert(value)));
+                await _driverRepository.AddDriverAsync(_driverDTOConverter.Convert(value));
+                return Ok();
             }
             catch
             {

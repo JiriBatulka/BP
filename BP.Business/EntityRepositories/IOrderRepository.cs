@@ -8,6 +8,6 @@ namespace BP.EntityRepositories
 {
     public interface IOrderRepository
     {
-        public Task<Guid> AddOrderAsync(Order order);
+        public Task AddOrderAsync(Order order);
     }
 }

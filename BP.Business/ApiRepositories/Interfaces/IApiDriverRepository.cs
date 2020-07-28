@@ -8,6 +8,6 @@ namespace BP.ApiRepositories.Interfaces
 {
     public interface IApiDriverRepository
     {
-        public Task<Guid> AddDriverAsync(Driver driver);
+        public Task AddDriverAsync(Driver driver);
     }
 }

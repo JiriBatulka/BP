@@ -11,17 +11,17 @@ namespace BP.Repositories
 {
     public class VehicleRentRepository : IVehicleRentRepository
     {
-        private readonly VehicleRentConverter vehicleRentConverter;
-        private readonly VehicleRentSP vehicleRentSP;
+        private readonly VehicleRentConverter _vehicleRentConverter;
+        private readonly VehicleRentSP _vehicleRentSP;
         public VehicleRentRepository(VehicleRentSP vehicleRentSP, VehicleRentConverter vehicleRentConverter)
         {
-            this.vehicleRentSP = vehicleRentSP;
-            this.vehicleRentConverter = vehicleRentConverter;
+            _vehicleRentSP = vehicleRentSP;
+            _vehicleRentConverter = vehicleRentConverter;
         }
 
-        public async Task<Guid> AddVehicleRentAsync(VehicleRent vehicleRent)
+        public async Task AddVehicleRentAsync(VehicleRent vehicleRent)
         {
-            return await vehicleRentSP.AddVehicleRentAsync(vehicleRentConverter.Convert(vehicleRent));
+            await _vehicleRentSP.AddVehicleRentAsync(_vehicleRentConverter.Convert(vehicleRent));
         }
     }
 }

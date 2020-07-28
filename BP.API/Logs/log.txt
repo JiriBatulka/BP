@@ -1,0 +1,35 @@
+2020-07-24 15:20:37.612 +02:00 [ERR] 
+Message: bla
+Trace:    at BP.StoredProcedures.CustomerSP.AddCustomerAsync(Customer customer) in C:\Users\jbatu\Documents\GitHub\BP\BP.Data\StoredProcedures\CustomerSP.cs:line 30
+   at BP.Repositories.CustomerRepository.AddCustomerAsync(Customer customer) in C:\Users\jbatu\Documents\GitHub\BP\BP.Data\Repositories\CustomerRepository.cs:line 23
+   at BP.ApiRepositories.ApiCustomerRepository.AddCustomerAsync(Customer customer) in C:\Users\jbatu\Documents\GitHub\BP\BP.Business\ApiRepositories\ApiCustomerRepository.cs:line 22
+   at BP.Controllers.CustomerController.AddCustomerAsync(AddCustomerDTO value) in C:\Users\jbatu\Documents\GitHub\BP\BP.API\Controllers\CustomerController.cs:line 36
+Time: "2020-07-24T13:20:37.5928172Z"
+2020-07-24 15:56:03.972 +02:00 [INF] Now listening on: https://[::]:443
+2020-07-24 15:56:03.984 +02:00 [INF] Now listening on: http://[::]:80
+2020-07-24 15:56:03.985 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-07-24 15:56:03.985 +02:00 [INF] Hosting environment: Development
+2020-07-24 15:56:03.985 +02:00 [INF] Content root path: C:\app
+2020-07-24 15:56:04.533 +02:00 [INF] Request starting HTTP/2 GET https://localhost:60487/weatherforecast  
+2020-07-24 15:56:04.556 +02:00 [INF] Request finished in 25.1128ms 404 
+2020-07-24 15:56:10.414 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:60487/api/customer/add application/json 80
+2020-07-24 15:56:10.425 +02:00 [INF] Executing endpoint 'BP.Controllers.CustomerController.AddCustomerAsync (BP.API)'
+2020-07-24 15:56:10.465 +02:00 [INF] Route matched with {action = "AddCustomer", controller = "Customer"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AddCustomerAsync(AddCustomerDTO) on controller BP.Controllers.CustomerController (BP.API).
+2020-07-24 15:56:12.438 +02:00 [ERR] 
+Message: bla
+Trace:    at BP.StoredProcedures.CustomerSP.AddCustomerAsync(Customer customer) in C:\Users\jbatu\Documents\GitHub\BP\BP.Data\StoredProcedures\CustomerSP.cs:line 30
+   at BP.Repositories.CustomerRepository.AddCustomerAsync(Customer customer) in C:\Users\jbatu\Documents\GitHub\BP\BP.Data\Repositories\CustomerRepository.cs:line 23
+   at BP.ApiRepositories.ApiCustomerRepository.AddCustomerAsync(Customer customer) in C:\Users\jbatu\Documents\GitHub\BP\BP.Business\ApiRepositories\ApiCustomerRepository.cs:line 22
+   at BP.Controllers.CustomerController.AddCustomerAsync(AddCustomerDTO value) in C:\Users\jbatu\Documents\GitHub\BP\BP.API\Controllers\CustomerController.cs:line 36
+Time: "2020-07-24T13:56:12.4385943Z"
+2020-07-24 15:56:13.817 +02:00 [INF] Executing ObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ProblemDetails'.
+2020-07-24 15:56:13.826 +02:00 [INF] Executed action BP.Controllers.CustomerController.AddCustomerAsync (BP.API) in 3356.5313ms
+2020-07-24 15:56:13.826 +02:00 [INF] Executed endpoint 'BP.Controllers.CustomerController.AddCustomerAsync (BP.API)'
+2020-07-24 15:56:13.828 +02:00 [INF] Request finished in 3413.5838ms 500 application/json; charset=utf-8
+2020-07-24 15:57:40.758 +02:00 [ERR] 
+Message: bla
+Trace:    at BP.StoredProcedures.CustomerSP.AddCustomerAsync(Customer customer) in C:\Users\jbatu\Documents\GitHub\BP\BP.Data\StoredProcedures\CustomerSP.cs:line 30
+   at BP.Repositories.CustomerRepository.AddCustomerAsync(Customer customer) in C:\Users\jbatu\Documents\GitHub\BP\BP.Data\Repositories\CustomerRepository.cs:line 23
+   at BP.ApiRepositories.ApiCustomerRepository.AddCustomerAsync(Customer customer) in C:\Users\jbatu\Documents\GitHub\BP\BP.Business\ApiRepositories\ApiCustomerRepository.cs:line 22
+   at BP.Controllers.CustomerController.AddCustomerAsync(AddCustomerDTO value) in C:\Users\jbatu\Documents\GitHub\BP\BP.API\Controllers\CustomerController.cs:line 36
+Time: "2020-07-24T13:57:40.7555403Z"

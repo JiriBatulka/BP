@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BP.Models
 {
-    public class Customer
+    public class Customer : UserIdentity
     {
         public Guid CustomerID { get; set; }
         public string FirstName { get; set; }

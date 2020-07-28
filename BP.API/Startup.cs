@@ -34,16 +34,26 @@ namespace BP.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddTransient<CustomLogger>();
             services.AddTransient<IApiCustomerRepository, ApiCustomerRepository>();
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<CustomerDTOConverter>();
             services.AddTransient<CustomerConverter>();
             services.AddTransient<CustomerSP>();
+            services.AddTransient<GenericSP>();
             services.AddDbContext<BPContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BPDatabase")), ServiceLifetime.Transient);
             services.AddTransient(serviceProvider =>
             {
                 return new DataSettings(Configuration.GetConnectionString("BPDatabase"));
             });
+            services.AddTransient(serviceProvider =>
+            {
+                return new BusinessSettings(
+                    Configuration.GetValue<string>("Security:PrivateEncryptionKey"),
+                    Configuration.GetValue<string>("Security:PublicEncryptionKey")
+                    );
+            });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

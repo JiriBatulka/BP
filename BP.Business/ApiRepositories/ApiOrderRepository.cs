@@ -10,16 +10,16 @@ namespace BP.ApiRepositories
 {
     public class ApiOrderRepository : IApiOrderRepository
     {
-        private readonly IOrderRepository orderRepository;
+        private readonly IOrderRepository _orderRepository;
 
         public ApiOrderRepository(IOrderRepository orderRepository)
         {
-            this.orderRepository = orderRepository;
+            _orderRepository = orderRepository;
         }
 
-        public async Task<Guid> AddOrderAsync(Order order)
+        public async Task AddOrderAsync(Order order)
         {
-            return await orderRepository.AddOrderAsync(order);
+            await _orderRepository.AddOrderAsync(order);
         }
     }
 }

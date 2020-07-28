@@ -8,6 +8,6 @@ namespace BP.EntityRepositories
 {
     public interface IVehicleRentRepository
     {
-        public Task<Guid> AddVehicleRentAsync(VehicleRent vehicleRent);
+        public Task AddVehicleRentAsync(VehicleRent vehicleRent);
     }
 }

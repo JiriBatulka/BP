@@ -11,22 +11,22 @@ namespace BP.Repositories
 {
     public class VehicleRepository : IVehicleRepository
     {
-        private readonly VehicleConverter vehicleConverter;
-        private readonly VehicleSP vehicleSP;
+        private readonly VehicleConverter _vehicleConverter;
+        private readonly VehicleSP _vehicleSP;
         public VehicleRepository(VehicleSP vehicleSP, VehicleConverter vehicleConverter)
         {
-            this.vehicleSP = vehicleSP;
-            this.vehicleConverter = vehicleConverter;
+            _vehicleSP = vehicleSP;
+            _vehicleConverter = vehicleConverter;
         }
 
-        public async Task<Guid> AddVehicleAsync(Models.Vehicle vehicle)
+        public async Task AddVehicleAsync(Models.Vehicle vehicle)
         {
-            return await vehicleSP.AddVehicleAsync(vehicleConverter.Convert(vehicle));
+            await _vehicleSP.AddVehicleAsync(_vehicleConverter.Convert(vehicle));
         }
 
         public async Task MoveVehicleAsync(Models.Vehicle vehicle)
         {
-            await vehicleSP.MoveVehicleAsync(vehicleConverter.Convert(vehicle));
+            await _vehicleSP.MoveVehicleAsync(_vehicleConverter.Convert(vehicle));
         }
     }
 }
