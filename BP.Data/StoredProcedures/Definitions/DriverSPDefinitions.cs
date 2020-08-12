@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace BP.StoredProcedures.Definitions
 {
@@ -17,10 +15,10 @@ namespace BP.StoredProcedures.Definitions
         private static void CreateAddDriver()
         {
             Definitions["AddDriver"] =
-                @"CREATE PROCEDURE [dbo].[AddDriver]
-                        @FirstName nvarchar(31),
-                        @Surname nvarchar(31),
-                        @PhoneNumber nvarchar(15)
+                @"CREATE OR ALTER PROCEDURE [dbo].[AddDriver]
+                        @FirstName nvarchar(255),
+                        @Surname nvarchar(255),
+                        @PhoneNumber nvarchar(255)
                     AS
                     BEGIN
                         SET NOCOUNT ON; 

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BP.Migrations
 {
-    public partial class CreateProcedures : Migration
+    public partial class AddStoredProcedures : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -20,6 +20,9 @@ namespace BP.Migrations
                 migrationBuilder.Sql(definition.Value);
 
             foreach (var definition in VehicleRentSPDefinitions.Definitions)
+                migrationBuilder.Sql(definition.Value);
+
+            foreach (var definition in UserIdentitySPDefinitions.Definitions)
                 migrationBuilder.Sql(definition.Value);
         }
 

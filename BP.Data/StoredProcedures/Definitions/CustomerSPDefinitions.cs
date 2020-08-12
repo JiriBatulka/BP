@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace BP.StoredProcedures.Definitions
 {
@@ -20,10 +18,12 @@ namespace BP.StoredProcedures.Definitions
         private static void CreateAddCustomer()
         {
             Definitions[AddCustomer] =
-                    @"CREATE PROCEDURE [dbo].[AddCustomer]
-                        @FirstName nvarchar(31),
-                        @Surname nvarchar(31),
-                        @PhoneNumber nvarchar(15)
+                    @"CREATE OR ALTER PROCEDURE [dbo].[AddCustomer]
+                        @FirstName nvarchar(255),
+                        @Surname nvarchar(255),
+                        @PhoneNumber nvarchar(255),
+                        @Email nvarchar(255),
+                        @Email nvarchar(255)
                     AS
                     BEGIN
                         SET NOCOUNT ON; 
@@ -40,12 +40,13 @@ namespace BP.StoredProcedures.Definitions
         private static void CreateMoveCustomer()
         {
             Definitions[MoveCustomer] =
-            @"CREATE PROCEDURE [dbo].[MoveCustomer]
+            @"CREATE OR ALTER PROCEDURE [dbo].[MoveCustomer]
                         @CustomerID uniqueidentifier,
                         @CurrentLat float,
                         @CurrentLng float
                     AS
                     BEGIN
+                        SET NOCOUNT ON; 
                         UPDATE [dbo].[Customers]
                         SET CurrentLat = @CurrentLat, CurrentLng = @CurrentLng
                         WHERE CustomerID = @CustomerID

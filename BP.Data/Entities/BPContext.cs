@@ -1,7 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BP.Entities
 {
@@ -16,6 +13,7 @@ namespace BP.Entities
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<VehicleRent> VehicleRents { get; set; }
+        public DbSet<UserIdentity> UserIdentities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -26,6 +24,34 @@ namespace BP.Entities
             BuildVehicles(modelBuilder);
             BuildOrders(modelBuilder);
             BuildVehicleRents(modelBuilder);
+            BuildUserIdentity(modelBuilder);
+        }
+
+        private void BuildUserIdentity(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserIdentity>()
+                .Property(x => x.UserIdentityID)
+                .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+            modelBuilder.Entity<UserIdentity>()
+                .Property(x => x.Username)
+                .HasMaxLength(255)
+                .IsRequired();
+
+            modelBuilder.Entity<UserIdentity>()
+                .Property(x => x.Role)
+                .HasMaxLength(255)
+                .IsRequired();
+
+            modelBuilder.Entity<UserIdentity>()
+                .Property(x => x.PasswordHash)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            modelBuilder.Entity<UserIdentity>()
+                .Property(x => x.PasswordSalt)
+                .IsRequired()
+                .HasMaxLength(255);
         }
 
         private void BuildVehicleRents(ModelBuilder modelBuilder)
@@ -54,22 +80,22 @@ namespace BP.Entities
 
             modelBuilder.Entity<Vehicle>()
                 .Property(x => x.Type)
-                .HasMaxLength(63)
+                .HasMaxLength(255)
                 .IsRequired();
 
             modelBuilder.Entity<Vehicle>()
                 .Property(x => x.NumberPlate)
-                .HasMaxLength(31)
+                .HasMaxLength(255)
                 .IsRequired();
 
             modelBuilder.Entity<Vehicle>()
                 .Property(x => x.Colour)
-                .HasMaxLength(15)
+                .HasMaxLength(255)
                 .IsRequired();
 
             modelBuilder.Entity<Order>()
                 .Property(x => x.IsActive)
-                .HasDefaultValue(true);
+                .HasDefaultValue(false);
         }
 
         private void BuildDrivers(ModelBuilder modelBuilder)
@@ -80,17 +106,17 @@ namespace BP.Entities
 
             modelBuilder.Entity<Driver>()
                 .Property(x => x.FirstName)
-                .HasMaxLength(31)
+                .HasMaxLength(255)
                 .IsRequired();
 
             modelBuilder.Entity<Driver>()
                 .Property(x => x.Surname)
-                .HasMaxLength(31)
+                .HasMaxLength(255)
                 .IsRequired();
 
             modelBuilder.Entity<Driver>()
                 .Property(x => x.PhoneNumber)
-                .HasMaxLength(15)
+                .HasMaxLength(255)
                 .IsRequired(); 
         }
 
@@ -102,22 +128,22 @@ namespace BP.Entities
 
             modelBuilder.Entity<Customer>()
                 .Property(x => x.FirstName)
-                .HasMaxLength(31)
+                .HasMaxLength(255)
                 .IsRequired();
 
             modelBuilder.Entity<Customer>()
                 .Property(x => x.Surname)
-                .HasMaxLength(31)
+                .HasMaxLength(255)
                 .IsRequired();
 
             modelBuilder.Entity<Customer>()
                 .Property(x => x.PhoneNumber)
-                .HasMaxLength(15)
+                .HasMaxLength(255)
                 .IsRequired();
 
             modelBuilder.Entity<Order>()
                 .Property(x => x.IsActive)
-                .HasDefaultValue(true);
+                .HasDefaultValue(false);
         }
     }
 }

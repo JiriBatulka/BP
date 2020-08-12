@@ -1,7 +1,5 @@
-﻿using BP.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BP.Entities
 {
@@ -9,7 +7,11 @@ namespace BP.Entities
     {
         public Guid UserIdentityID { get; set; }
         public string Username { get; set; }
-        public string Password { get; set; }
-        public RoleEnum Role { get; set; }
+        public byte[] PasswordHash { get; set; }
+        public string PasswordSalt { get; set; }
+        public string Role { get; set; }
+
+        public List<Driver> Drivers { get; set; }
+        public List<Customer> Customers { get; set; }
     }
 }

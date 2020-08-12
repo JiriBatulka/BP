@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 
 namespace BP.Converters
 {
@@ -12,9 +10,9 @@ namespace BP.Converters
         [Obsolete]
         public static T Convert<T>(object value) where T : class, new()
         {
-            var result = new T();
+            T result = new T();
             PropertyInfo[] valueProperties = value.GetType().GetProperties();
-            var resultType = result.GetType();
+            Type resultType = result.GetType();
             foreach (PropertyInfo valueProperty in valueProperties)
             {
                 if (resultType.GetProperty(valueProperty.Name) != null)

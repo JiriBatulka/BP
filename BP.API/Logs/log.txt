@@ -33,3 +33,10 @@ Trace:    at BP.StoredProcedures.CustomerSP.AddCustomerAsync(Customer customer) 
    at BP.ApiRepositories.ApiCustomerRepository.AddCustomerAsync(Customer customer) in C:\Users\jbatu\Documents\GitHub\BP\BP.Business\ApiRepositories\ApiCustomerRepository.cs:line 22
    at BP.Controllers.CustomerController.AddCustomerAsync(AddCustomerDTO value) in C:\Users\jbatu\Documents\GitHub\BP\BP.API\Controllers\CustomerController.cs:line 36
 Time: "2020-07-24T13:57:40.7555403Z"
+2020-08-11 15:10:27.542 +02:00 [ERR] 
+Message: The length of the data to decrypt is not valid for the size of this key.
+Trace:    at System.Security.Cryptography.RSACryptoServiceProvider.Decrypt(Byte[] rgb, Boolean fOAEP)
+   at BP.Services.PasswordService.Decrypt(String encryptedPassword) in C:\Users\jbatu\Documents\GitHub\BP\BP.Business\Services\PasswordService.cs:line 31
+   at BP.ApiRepositories.ApiCustomerRepository.AddCustomerAsync(Customer customer) in C:\Users\jbatu\Documents\GitHub\BP\BP.Business\ApiRepositories\ApiCustomerRepository.cs:line 25
+   at BP.Controllers.CustomerController.AddCustomerAsync(AddCustomerDTO value) in C:\Users\jbatu\Documents\GitHub\BP\BP.API\Controllers\CustomerController.cs:line 33
+Time: "2020-08-11T13:10:27.5241024Z"

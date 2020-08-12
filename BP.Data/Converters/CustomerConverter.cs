@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace BP.Converters
+﻿namespace BP.Converters
 {
     public class CustomerConverter
     {
@@ -16,7 +12,8 @@ namespace BP.Converters
                 PhoneNumber = customer.PhoneNumber,
                 CurrentLat = customer.CurrentLat,
                 CurrentLng = customer.CurrentLng,
-                IsActive = customer.IsActive
+                IsActive = customer.IsActive,
+                UserIdentityID = customer.UserIdentityID
             };
         }
     }

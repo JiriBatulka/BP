@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 using BP.ApiRepositories;
 using BP.ApiRepositories.Interfaces;
 using BP.Converters;
@@ -11,13 +8,11 @@ using BP.Repositories;
 using BP.StoredProcedures;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using BP.Services;
 
 namespace BP.API
 {
@@ -33,14 +28,15 @@ namespace BP.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            AddCustomerServices(services);
+            AddUserIdentityServices(services);
+            AddOtherServices(services);
+        }
+
+        private void AddOtherServices(IServiceCollection services)
+        {
             services.AddControllers();
             services.AddTransient<CustomLogger>();
-            services.AddTransient<IApiCustomerRepository, ApiCustomerRepository>();
-            services.AddTransient<ICustomerRepository, CustomerRepository>();
-            services.AddTransient<CustomerDTOConverter>();
-            services.AddTransient<CustomerConverter>();
-            services.AddTransient<CustomerSP>();
-            services.AddTransient<GenericSP>();
             services.AddDbContext<BPContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BPDatabase")), ServiceLifetime.Transient);
             services.AddTransient(serviceProvider =>
             {
@@ -53,7 +49,25 @@ namespace BP.API
                     Configuration.GetValue<string>("Security:PublicEncryptionKey")
                     );
             });
-            
+            services.AddTransient<PasswordService>();
+        }
+
+        private void AddUserIdentityServices(IServiceCollection services)
+        {
+            services.AddTransient<IApiUserIdentityRepository, ApiUserIdentityRepository>();
+            services.AddTransient<IUserIdentityRepository, UserIdentityRepository>();
+            services.AddTransient<UserIdentitySP>();
+            services.AddTransient<UserIdentityDTOConverter>();
+            services.AddTransient<UserIdentityConverter>();
+        }
+
+        private void AddCustomerServices(IServiceCollection services)
+        {
+            services.AddTransient<IApiCustomerRepository, ApiCustomerRepository>();
+            services.AddTransient<ICustomerRepository, CustomerRepository>();
+            services.AddTransient<CustomerSP>();
+            services.AddTransient<CustomerDTOConverter>();
+            services.AddTransient<CustomerConverter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

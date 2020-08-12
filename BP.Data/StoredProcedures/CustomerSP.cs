@@ -1,11 +1,7 @@
 ﻿using BP.Entities;
 using BP.StoredProcedures.Definitions;
 using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BP.StoredProcedures
@@ -21,7 +17,7 @@ namespace BP.StoredProcedures
         public async Task AddCustomerAsync(Customer customer)
         {
             //This is how stored procedure with output parameter is executed:
-            //var CustomerID = new SqlParameter();
+            //SqlParameter CustomerID = new SqlParameter();
             //CustomerID.ParameterName = "@CustomerID";
             //CustomerID.SqlDbType = SqlDbType.UniqueIdentifier;
             //CustomerID.Direction = ParameterDirection.Output;

@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace BP.Converters
+﻿namespace BP.Converters
 {
     public class DriverConverter
     {
@@ -12,7 +9,9 @@ namespace BP.Converters
                 DriverID = driver.DriverID,
                 FirstName = driver.FirstName,
                 Surname = driver.Surname,
-                PhoneNumber = driver.PhoneNumber
+                PhoneNumber = driver.PhoneNumber,
+                Email = driver.Email,
+                UserIdentityID = driver.UserIdentityID
             };
         }
     }

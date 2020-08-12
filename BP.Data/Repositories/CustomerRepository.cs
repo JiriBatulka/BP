@@ -1,9 +1,6 @@
 ﻿using BP.Converters;
-using BP.Entities;
 using BP.EntityRepositories;
 using BP.StoredProcedures;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Threading.Tasks;
 
 namespace BP.Repositories

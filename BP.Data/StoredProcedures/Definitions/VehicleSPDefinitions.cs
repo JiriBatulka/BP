@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace BP.StoredProcedures.Definitions
 {
@@ -19,14 +17,14 @@ namespace BP.StoredProcedures.Definitions
         private static void CreateAddVehicle()
         {
             Definitions[AddVehicle] =
-                @"CREATE PROCEDURE [dbo].[AddVehicle]
-                        @Type nvarchar(63),
-                        @NumberPlate nvarchar(31),
-                        @Colour nvarchar(15),
+                @"CREATE OR ALTER PROCEDURE [dbo].[AddVehicle]
+                        @Type nvarchar(255),
+                        @NumberPlate nvarchar(255),
+                        @Colour nvarchar(255),
                         @AdultSeats int,
                         @InfantSeats int,
                         @BootCapacity int,
-                        @IsShared bit,
+                        @IsShared bit
                     AS
                     BEGIN
                         SET NOCOUNT ON; 
@@ -51,12 +49,13 @@ namespace BP.StoredProcedures.Definitions
         private static void CreateMoveVehicle()
         {
             Definitions[MoveVehicle] =
-                @"CREATE PROCEDURE [dbo].[MoveVehicle]
+                @"CREATE OR ALTER PROCEDURE [dbo].[MoveVehicle]
                         @VehicleID uniqueidentifier,
                         @CurrentLat float,
                         @CurrentLng float
                     AS
                     BEGIN
+                        SET NOCOUNT ON; 
                         UPDATE [dbo].[Vehicles]
                         SET CurrentLat = @CurrentLat, CurrentLng = @CurrentLng
                         WHERE VehicleID = @VehicleID

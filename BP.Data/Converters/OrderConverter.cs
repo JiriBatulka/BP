@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace BP.Converters
+﻿namespace BP.Converters
 {
     public class OrderConverter
     {

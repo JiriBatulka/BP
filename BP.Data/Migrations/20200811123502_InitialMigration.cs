@@ -3,39 +3,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BP.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Customers",
+                name: "UserIdentities",
                 columns: table => new
                 {
-                    CustomerID = table.Column<Guid>(nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
-                    FirstName = table.Column<string>(maxLength: 31, nullable: false),
-                    Surname = table.Column<string>(maxLength: 31, nullable: false),
-                    PhoneNumber = table.Column<string>(maxLength: 15, nullable: false),
-                    CurrentLat = table.Column<double>(nullable: true),
-                    CurrentLng = table.Column<double>(nullable: true),
-                    IsActive = table.Column<bool>(nullable: true)
+                    UserIdentityID = table.Column<Guid>(nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
+                    Username = table.Column<string>(maxLength: 255, nullable: false),
+                    PasswordHash = table.Column<byte[]>(maxLength: 255, nullable: false),
+                    PasswordSalt = table.Column<string>(maxLength: 255, nullable: false),
+                    Role = table.Column<string>(maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customers", x => x.CustomerID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Drivers",
-                columns: table => new
-                {
-                    DriverID = table.Column<Guid>(nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
-                    FirstName = table.Column<string>(maxLength: 31, nullable: false),
-                    Surname = table.Column<string>(maxLength: 31, nullable: false),
-                    PhoneNumber = table.Column<string>(maxLength: 15, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Drivers", x => x.DriverID);
+                    table.PrimaryKey("PK_UserIdentities", x => x.UserIdentityID);
                 });
 
             migrationBuilder.CreateTable(
@@ -43,9 +27,9 @@ namespace BP.Migrations
                 columns: table => new
                 {
                     VehicleID = table.Column<Guid>(nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
-                    Type = table.Column<string>(maxLength: 63, nullable: false),
-                    NumberPlate = table.Column<string>(maxLength: 31, nullable: false),
-                    Colour = table.Column<string>(maxLength: 15, nullable: false),
+                    Type = table.Column<string>(maxLength: 255, nullable: false),
+                    NumberPlate = table.Column<string>(maxLength: 255, nullable: false),
+                    Colour = table.Column<string>(maxLength: 255, nullable: false),
                     AdultSeats = table.Column<int>(nullable: false),
                     InfantSeats = table.Column<int>(nullable: false),
                     BootCapacity = table.Column<int>(nullable: false),
@@ -57,6 +41,53 @@ namespace BP.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Vehicles", x => x.VehicleID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Customers",
+                columns: table => new
+                {
+                    CustomerID = table.Column<Guid>(nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
+                    FirstName = table.Column<string>(maxLength: 255, nullable: false),
+                    Surname = table.Column<string>(maxLength: 255, nullable: false),
+                    PhoneNumber = table.Column<string>(maxLength: 255, nullable: false),
+                    Email = table.Column<string>(nullable: true),
+                    CurrentLat = table.Column<double>(nullable: true),
+                    CurrentLng = table.Column<double>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: true),
+                    UserIdentityID = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Customers", x => x.CustomerID);
+                    table.ForeignKey(
+                        name: "FK_Customers_UserIdentities_UserIdentityID",
+                        column: x => x.UserIdentityID,
+                        principalTable: "UserIdentities",
+                        principalColumn: "UserIdentityID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Drivers",
+                columns: table => new
+                {
+                    DriverID = table.Column<Guid>(nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
+                    FirstName = table.Column<string>(maxLength: 255, nullable: false),
+                    Surname = table.Column<string>(maxLength: 255, nullable: false),
+                    PhoneNumber = table.Column<string>(maxLength: 255, nullable: false),
+                    Email = table.Column<string>(nullable: true),
+                    UserIdentityID = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Drivers", x => x.DriverID);
+                    table.ForeignKey(
+                        name: "FK_Drivers_UserIdentities_UserIdentityID",
+                        column: x => x.UserIdentityID,
+                        principalTable: "UserIdentities",
+                        principalColumn: "UserIdentityID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -121,6 +152,16 @@ namespace BP.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Customers_UserIdentityID",
+                table: "Customers",
+                column: "UserIdentityID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Drivers_UserIdentityID",
+                table: "Drivers",
+                column: "UserIdentityID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_CustomerID",
                 table: "Orders",
                 column: "CustomerID");
@@ -157,6 +198,9 @@ namespace BP.Migrations
 
             migrationBuilder.DropTable(
                 name: "Vehicles");
+
+            migrationBuilder.DropTable(
+                name: "UserIdentities");
         }
     }
 }

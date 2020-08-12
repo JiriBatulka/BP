@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace BP.StoredProcedures.Definitions
 {
@@ -17,7 +15,7 @@ namespace BP.StoredProcedures.Definitions
         private static void CreateAddOrder()
         {
             Definitions[AddOrder] =
-                @"CREATE PROCEDURE [dbo].[AddOrder]
+                @"CREATE OR ALTER PROCEDURE [dbo].[AddOrder]
                         @StartTime datetime2(7),
                         @VehicleArriveEstimate datetime2(7),
                         @EndTimeEstimate datetime2(7),

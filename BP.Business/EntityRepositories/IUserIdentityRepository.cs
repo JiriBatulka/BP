@@ -1,13 +1,11 @@
 ﻿using BP.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BP.EntityRepositories
 {
     public interface IUserIdentityRepository
     {
-        public Task<Guid> AddUserIdentityAsync(UserIdentity userIdentity);
+        public Task<UserIdentity> AddUserIdentityAsync(UserIdentity userIdentity);
+        public Task<(byte[] Hash, string Salt)> GetHashSaltAsync(string username);
     }
 }

@@ -1,26 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BP.DTOs
 {
     public class DriverDTO
     {
-        public class AddDriverDTO : UserIdentityDTO
+        public class AddDriverDTO
         {
-            [Required]
+            [Required, StringLength(255)]
             public string Surname { get; set; }
-            [Required]
+            [Required, StringLength(255)]
             public string FirstName { get; set; }
-            [Required]
+            [Required, StringLength(255)]
             public string PhoneNumber { get; set; }
             [Required]
             [DataType(DataType.EmailAddress)]
             public string Email { get; set; }
+            [Required, StringLength(255)]
+            public string Username { get; set; }
+            [Required]
+            public string EncryptedPassword { get; set; }
         }
     }
 }

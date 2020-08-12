@@ -1,7 +1,4 @@
 ﻿using BP.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using static BP.DTOs.CustomerDTO;
 
 namespace BP.Converters
@@ -14,7 +11,10 @@ namespace BP.Converters
             {
                 FirstName = addCustomerDTO.FirstName,
                 Surname = addCustomerDTO.Surname,
-                PhoneNumber = addCustomerDTO.PhoneNumber
+                PhoneNumber = addCustomerDTO.PhoneNumber,
+                Email = addCustomerDTO.Email,
+                EncryptedPassword = addCustomerDTO.EncryptedPassword,
+                Username = addCustomerDTO.Username
             };
         }
 

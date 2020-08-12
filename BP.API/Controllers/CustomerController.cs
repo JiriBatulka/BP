@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using BP.ApiRepositories.Interfaces;
 using BP.Converters;
 using BP.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -28,11 +27,25 @@ namespace BP.Controllers
             _logger = logger;
         }
 
-        [HttpGet("add")]
+        [HttpPost("add")]
         public async Task<IActionResult> AddCustomerAsync([FromBody]CustomerDTO.AddCustomerDTO value)
         {
             try
             {
+                //for testing purposes only!!!
+                using var rsa = new RSACryptoServiceProvider(1024);
+                try
+                {
+                    byte[] dataToEncrypt = Encoding.UTF8.GetBytes(value.EncryptedPassword);
+                    rsa.FromXmlString("<RSAKeyValue><Modulus>v8bjybJHOTrgRh6y1FVZEPhVJlfPhEO7Iz2aEWMQo3oNqVPpvLwIa5RclB8+mmI0my5aW0ujRdqh9CgMCuI6hZE2kakieqT2eSfDqIXRlC1/AGoqLYBeaXrTSsxdHzGjNVeWheFPJQzEMPl3q8GeHTyjqtr87sUbSOzLFr/sl9E =</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>");
+                    byte[] encryptedData = rsa.Encrypt(dataToEncrypt, true);
+                    value.EncryptedPassword = Convert.ToBase64String(encryptedData);
+                }
+                finally
+                {
+                    rsa.PersistKeyInCsp = false;
+                }
+
                 await _customerRepository.AddCustomerAsync(_customerDTOConverter.Convert(value));
                 return Ok();
             }

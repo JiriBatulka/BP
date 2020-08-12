@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BP.Migrations
 {
     [DbContext(typeof(BPContext))]
-    [Migration("20200626094507_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20200811123502_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.5")
+                .HasAnnotation("ProductVersion", "3.1.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -34,25 +34,33 @@ namespace BP.Migrations
                     b.Property<double?>("CurrentLng")
                         .HasColumnType("float");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(31)")
-                        .HasMaxLength(31);
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
 
                     b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(15)")
-                        .HasMaxLength(15);
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
 
                     b.Property<string>("Surname")
                         .IsRequired()
-                        .HasColumnType("nvarchar(31)")
-                        .HasMaxLength(31);
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<Guid>("UserIdentityID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("CustomerID");
+
+                    b.HasIndex("UserIdentityID");
 
                     b.ToTable("Customers");
                 });
@@ -64,22 +72,30 @@ namespace BP.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasDefaultValueSql("NEWSEQUENTIALID()");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(31)")
-                        .HasMaxLength(31);
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(15)")
-                        .HasMaxLength(15);
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
 
                     b.Property<string>("Surname")
                         .IsRequired()
-                        .HasColumnType("nvarchar(31)")
-                        .HasMaxLength(31);
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<Guid>("UserIdentityID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("DriverID");
+
+                    b.HasIndex("UserIdentityID");
 
                     b.ToTable("Drivers");
                 });
@@ -132,6 +148,38 @@ namespace BP.Migrations
                     b.ToTable("Orders");
                 });
 
+            modelBuilder.Entity("BP.Entities.UserIdentity", b =>
+                {
+                    b.Property<Guid>("UserIdentityID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+                    b.Property<byte[]>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("varbinary(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.HasKey("UserIdentityID");
+
+                    b.ToTable("UserIdentities");
+                });
+
             modelBuilder.Entity("BP.Entities.Vehicle", b =>
                 {
                     b.Property<Guid>("VehicleID")
@@ -147,8 +195,8 @@ namespace BP.Migrations
 
                     b.Property<string>("Colour")
                         .IsRequired()
-                        .HasColumnType("nvarchar(15)")
-                        .HasMaxLength(15);
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
 
                     b.Property<double?>("CurrentLat")
                         .HasColumnType("float");
@@ -167,13 +215,13 @@ namespace BP.Migrations
 
                     b.Property<string>("NumberPlate")
                         .IsRequired()
-                        .HasColumnType("nvarchar(31)")
-                        .HasMaxLength(31);
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("nvarchar(63)")
-                        .HasMaxLength(63);
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
 
                     b.HasKey("VehicleID");
 
@@ -209,6 +257,24 @@ namespace BP.Migrations
                     b.HasIndex("VehicleID");
 
                     b.ToTable("VehicleRents");
+                });
+
+            modelBuilder.Entity("BP.Entities.Customer", b =>
+                {
+                    b.HasOne("BP.Entities.UserIdentity", "UserIdentity")
+                        .WithMany("Customers")
+                        .HasForeignKey("UserIdentityID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BP.Entities.Driver", b =>
+                {
+                    b.HasOne("BP.Entities.UserIdentity", "UserIdentity")
+                        .WithMany("Drivers")
+                        .HasForeignKey("UserIdentityID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("BP.Entities.Order", b =>

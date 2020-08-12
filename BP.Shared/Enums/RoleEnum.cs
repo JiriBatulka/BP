@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BP.Enums
+﻿namespace BP.Enums
 {
     public enum RoleEnum
     {

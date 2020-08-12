@@ -2,9 +2,6 @@
 using BP.EntityRepositories;
 using BP.Models;
 using BP.StoredProcedures;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BP.Repositories
@@ -19,9 +16,15 @@ namespace BP.Repositories
             _userIdentityConverter = userIdentityConverter;
         }
 
-        public async Task<Guid> AddUserIdentityAsync(UserIdentity userIdentity)
+        public async Task<UserIdentity> AddUserIdentityAsync(UserIdentity userIdentity)
         {
-            return await _userIdentitySP.AddUserIdentityAsync(_userIdentityConverter.Convert(userIdentity));
+            userIdentity.UserIdentityID = await _userIdentitySP.AddUserIdentityAsync(_userIdentityConverter.Convert(userIdentity));
+            return userIdentity;
+        }
+
+        public async Task<(byte[] Hash, string Salt)> GetHashSaltAsync(string username)
+        {
+            return await _userIdentitySP.GetHashSaltAsync(username);
         }
     }
 }

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BP.DTOs
 {
@@ -10,11 +7,11 @@ namespace BP.DTOs
     {
         public class AddVehicleDTO
         {
-            [Required]
+            [Required, StringLength(255)]
             public string Type { get; set; }
-            [Required]
+            [Required, StringLength(255)]
             public string NumberPlate { get; set; }
-            [Required]
+            [Required, StringLength(255)]
             public string Colour { get; set; }
             [Required]
             public int AdultSeats { get; set; }

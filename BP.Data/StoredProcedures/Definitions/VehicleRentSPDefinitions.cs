@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace BP.StoredProcedures.Definitions
 {
@@ -17,12 +15,12 @@ namespace BP.StoredProcedures.Definitions
         private static void CreateAddVehicleRent()
         {
             Definitions[AddVehicleRent] =
-                @"CREATE PROCEDURE [dbo].[AddVehicleRent]
+                @"CREATE OR ALTER PROCEDURE [dbo].[AddVehicleRent]
                         @TimeFrom datetime2(7),
                         @TimeUntil datetime2(7),
                         @IsOwned bit,
                         @VehicleID uniqueidentifier,
-                        @DriverID uniqueidentifier,
+                        @DriverID uniqueidentifier
                     AS
                     BEGIN
                         SET NOCOUNT ON; 
