@@ -4,8 +4,8 @@ namespace BP.StoredProcedures.Definitions
 {
     internal class DriverSPDefinitions
     {
-        public static Dictionary<string, string> Definitions = new Dictionary<string, string>();
-        public static string AddDriver = "AddDriver";
+        public static Dictionary<string, string> Definitions { get; } = new Dictionary<string, string>();
+        public static string AddDriver { get; } = "AddDriver";
 
         static DriverSPDefinitions()
         {
@@ -15,20 +15,26 @@ namespace BP.StoredProcedures.Definitions
         private static void CreateAddDriver()
         {
             Definitions["AddDriver"] =
-                @"CREATE OR ALTER PROCEDURE [dbo].[AddDriver]
+                $@"CREATE OR ALTER PROCEDURE [dbo].[{AddDriver}]
                         @FirstName nvarchar(255),
                         @Surname nvarchar(255),
-                        @PhoneNumber nvarchar(255)
+                        @PhoneNumber nvarchar(255),
+                        @Email nvarchar(255),
+                        @UserIdentityID uniqueidentifier
                     AS
                     BEGIN
                         SET NOCOUNT ON; 
                         INSERT INTO [dbo].[Drivers]  
                             (FirstName,  
                              Surname,  
-                             PhoneNumber)
+                             PhoneNumber,  
+                             Email,  
+                             UserIdentityID)
                         VALUES (@FirstName,  
-                             @Surname,  
-                             @PhoneNumber);
+                             @Surname, 
+                             @PhoneNumber,  
+                             @Email,  
+                             @UserIdentityID);
                     END";
         }
     }

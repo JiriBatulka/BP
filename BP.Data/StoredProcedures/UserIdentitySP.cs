@@ -1,8 +1,11 @@
 ﻿using BP.Entities;
+using BP.Exceptions;
 using BP.StoredProcedures.Definitions;
+using Dapper;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BP.StoredProcedures
@@ -17,59 +20,59 @@ namespace BP.StoredProcedures
 
         public async Task<Guid> AddUserIdentityAsync(UserIdentity userIdentity)
         {
-            SqlConnection conn = new SqlConnection();
-            SqlCommand cmd = new SqlCommand();
-            conn.ConnectionString = _dataSettings.ConnectionString;
-            cmd.Connection = conn;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = UserIdentitySPDefinitions.AddUserIdentity;
+            //SqlConnection conn = new SqlConnection();
+            //SqlCommand cmd = new SqlCommand();
+            //conn.ConnectionString = _dataSettings.ConnectionString;
+            //cmd.Connection = conn;
+            //cmd.CommandType = CommandType.StoredProcedure;
+            //cmd.CommandText = UserIdentitySPDefinitions.AddUserIdentity;
 
-            cmd.Parameters.AddWithValue("@Username", userIdentity.Username);
-            cmd.Parameters.AddWithValue("@PasswordHash", userIdentity.PasswordHash);
-            cmd.Parameters.AddWithValue("@PasswordSalt", userIdentity.PasswordSalt);
-            cmd.Parameters.AddWithValue("@Role", userIdentity.Role);
+            //cmd.Parameters.AddWithValue("@Username", userIdentity.Username);
+            //cmd.Parameters.AddWithValue("@PasswordHash", userIdentity.PasswordHash);
+            //cmd.Parameters.AddWithValue("@PasswordSalt", userIdentity.PasswordSalt);
+            //cmd.Parameters.AddWithValue("@Role", userIdentity.Role);
 
-            cmd.Parameters.Add("@UserIdentityID", SqlDbType.UniqueIdentifier);
-            cmd.Parameters["@UserIdentityID"].Direction = ParameterDirection.Output;
+            //cmd.Parameters.Add("@UserIdentityID", SqlDbType.UniqueIdentifier);
+            //cmd.Parameters["@UserIdentityID"].Direction = ParameterDirection.Output;
+
+            //conn.Open();
+            //await cmd.ExecuteNonQueryAsync();
+            //return (Guid)cmd.Parameters["@UserIdentityID"].Value;
+
+
+            using IDbConnection conn = new SqlConnection(_dataSettings.ConnectionString);
+            var parameters = new DynamicParameters();
+            parameters.Add("@Username", userIdentity.Username);
+            parameters.Add("@PasswordHash", userIdentity.PasswordHash);
+            parameters.Add("@PasswordSalt", userIdentity.PasswordSalt);
+            parameters.Add("@Role", userIdentity.Role);
+            parameters.Add("@UserIdentityID", dbType: DbType.Guid, direction: ParameterDirection.Output);
 
             try
             {
-                conn.Open();
-                await cmd.ExecuteNonQueryAsync();
-                return (Guid)cmd.Parameters["@UserIdentityID"].Value;
+                await conn.ExecuteAsync(UserIdentitySPDefinitions.AddUserIdentity, parameters, commandType: CommandType.StoredProcedure);
             }
-            finally
+            catch (SqlException ex)
             {
-                conn.Close();
+                if (ex.Number == 2601)
+                {
+                    throw new UniqueConstraintException($"Username already exists: {userIdentity.Username}");
+                }
+                else
+                {
+                    throw;
+                }
             }
+            return parameters.Get<Guid>("@UserIdentityID");
         }
 
-        public async Task<(byte[] Hash, string Salt)> GetHashSaltAsync(string username)
+        public async Task<UserIdentity> GetUserIdentity(string username)
         {
-            SqlConnection conn = new SqlConnection();
-            SqlCommand cmd = new SqlCommand();
-            conn.ConnectionString = _dataSettings.ConnectionString;
-            cmd.Connection = conn;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = UserIdentitySPDefinitions.GetHashSalt;
-
-            cmd.Parameters.AddWithValue("@Username", username);
-
-            cmd.Parameters.Add("@PasswordHash", SqlDbType.UniqueIdentifier);
-            cmd.Parameters["@PasswordHash"].Direction = ParameterDirection.Output;
-            cmd.Parameters.Add("@PasswordSalt", SqlDbType.UniqueIdentifier);
-            cmd.Parameters["@PasswordSalt"].Direction = ParameterDirection.Output;
-
-            try
-            {
-                conn.Open();
-                await cmd.ExecuteNonQueryAsync();
-                return ((byte[])cmd.Parameters["@PasswordHash"].Value, (string)cmd.Parameters["@PasswordSalt"].Value);
-            }
-            finally
-            {
-                conn.Close();
-            }
+            using IDbConnection conn = new SqlConnection(_dataSettings.ConnectionString);
+            var parameters = new DynamicParameters();
+            parameters.Add("@Username", username);
+            return await conn.QueryFirstOrDefaultAsync<UserIdentity>(UserIdentitySPDefinitions.GetUserIdentityByUsername, parameters,
+                commandType: CommandType.StoredProcedure);
         }
     }
 }

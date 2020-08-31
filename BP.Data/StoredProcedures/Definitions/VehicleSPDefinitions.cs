@@ -4,9 +4,9 @@ namespace BP.StoredProcedures.Definitions
 {
     internal class VehicleSPDefinitions
     {
-        public static Dictionary<string, string> Definitions = new Dictionary<string, string>();
-        public static string AddVehicle = "AddVehicle";
-        public static string MoveVehicle = "MoveVehicle";
+        public static Dictionary<string, string> Definitions { get; } = new Dictionary<string, string>();
+        public static string AddVehicle { get; } = "AddVehicle";
+        public static string MoveVehicle { get; } = "MoveVehicle";
 
         static VehicleSPDefinitions()
         {
@@ -17,7 +17,7 @@ namespace BP.StoredProcedures.Definitions
         private static void CreateAddVehicle()
         {
             Definitions[AddVehicle] =
-                @"CREATE OR ALTER PROCEDURE [dbo].[AddVehicle]
+                $@"CREATE OR ALTER PROCEDURE [dbo].[{AddVehicle}]
                         @Type nvarchar(255),
                         @NumberPlate nvarchar(255),
                         @Colour nvarchar(255),
@@ -49,7 +49,7 @@ namespace BP.StoredProcedures.Definitions
         private static void CreateMoveVehicle()
         {
             Definitions[MoveVehicle] =
-                @"CREATE OR ALTER PROCEDURE [dbo].[MoveVehicle]
+                $@"CREATE OR ALTER PROCEDURE [dbo].[{MoveVehicle}]
                         @VehicleID uniqueidentifier,
                         @CurrentLat float,
                         @CurrentLng float

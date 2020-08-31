@@ -1,6 +1,9 @@
 ﻿using BP.Entities;
 using BP.StoredProcedures.Definitions;
+using Dapper;
 using Microsoft.Data.SqlClient;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 
@@ -16,57 +19,60 @@ namespace BP.StoredProcedures
 
         public async Task AddCustomerAsync(Customer customer)
         {
-            //This is how stored procedure with output parameter is executed:
+            //This is how stored procedure with output parameter is executed using EF:
+
             //SqlParameter CustomerID = new SqlParameter();
             //CustomerID.ParameterName = "@CustomerID";
             //CustomerID.SqlDbType = SqlDbType.UniqueIdentifier;
             //CustomerID.Direction = ParameterDirection.Output;
             //await BPContext.Database.ExecuteSqlInterpolatedAsync($"EXECUTE {CustomerSPDefinitions.AddCustomer} {customer.FirstName}, {customer.Surname}, {customer.PhoneNumber}, {customer.IsActive}, {CustomerID} OUT");
 
-            SqlConnection conn = new SqlConnection();
-            SqlCommand cmd = new SqlCommand();
-            conn.ConnectionString = _dataSettings.ConnectionString;
-            cmd.Connection = conn;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = CustomerSPDefinitions.AddCustomer;
+            //This is how SP with output parameter is executedusing ADO.NET:
 
-            cmd.Parameters.AddWithValue("@FirstName", customer.FirstName);
-            cmd.Parameters.AddWithValue("@Surname", customer.Surname);
-            cmd.Parameters.AddWithValue("@PhoneNumber", customer.PhoneNumber);
+            //SqlConnection conn = new SqlConnection();
+            //SqlCommand cmd = new SqlCommand();
+            //conn.ConnectionString = _dataSettings.ConnectionString;
+            //cmd.Connection = conn;
+            //cmd.CommandType = CommandType.StoredProcedure;
+            //cmd.CommandText = CustomerSPDefinitions.AddCustomer;
+            //cmd.Parameters.AddWithValue("@FirstName", customer.FirstName);
+            //cmd.Parameters.AddWithValue("@Surname", customer.Surname);
+            //cmd.Parameters.AddWithValue("@PhoneNumber", customer.PhoneNumber);
+            //cmd.Parameters.AddWithValue("@Email", customer.Email);
+            //cmd.Parameters.AddWithValue("@UserIdentityID", customer.UserIdentityID);
+            //conn.Open();
+            //await cmd.ExecuteNonQueryAsync();
 
-            try
-            {
-                conn.Open();
-                await cmd.ExecuteNonQueryAsync();
-            }
-            finally
-            {
-                conn.Close();
-            }
+            //Using Dapper:
+
+            using IDbConnection conn = new SqlConnection(_dataSettings.ConnectionString);
+            var parameters = new DynamicParameters();
+            parameters.Add("@FirstName", customer.FirstName);
+            parameters.Add("@Surname", customer.Surname);
+            parameters.Add("@PhoneNumber", customer.PhoneNumber);
+            parameters.Add("@Email", customer.Email);
+            parameters.Add("@UserIdentityID", customer.UserIdentityID);
+
+            await conn.ExecuteAsync(CustomerSPDefinitions.AddCustomer, parameters, commandType: CommandType.StoredProcedure);
+        }
+
+        internal Task<Task<Task<List<Customer>>>> GetCustomersAsync()
+        {
+            using IDbConnection conn = new SqlConnection(_dataSettings.ConnectionString);
+            var parameters = new DynamicParameters();
+            return await conn.QueryFirstOrDefaultAsync<List<Customer>($"dbo.{UserIdentitySPDefinitions.GetUserIdentityByUsername}", parameters,
+                commandType: CommandType.StoredProcedure);
         }
 
         public async Task MoveCustomerAsync(Customer customer)
         {
-            SqlConnection conn = new SqlConnection();
-            SqlCommand cmd = new SqlCommand();
-            conn.ConnectionString = _dataSettings.ConnectionString;
-            cmd.Connection = conn;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = CustomerSPDefinitions.MoveCustomer;
+            using IDbConnection conn = new SqlConnection(_dataSettings.ConnectionString);
+            var parameters = new DynamicParameters();
+            parameters.Add("@CustomerID", customer.CustomerID);
+            parameters.Add("@CurrentLat", customer.CurrentLat);
+            parameters.Add("@PhoneNCurrentLngumber", customer.CurrentLng);
 
-            cmd.Parameters.AddWithValue("@CustomerID", customer.CustomerID);
-            cmd.Parameters.AddWithValue("@CurrentLat", customer.CurrentLat);
-            cmd.Parameters.AddWithValue("@CurrentLng", customer.CurrentLng);
-
-            try
-            {
-                conn.Open();
-                await cmd.ExecuteNonQueryAsync();
-            }
-            finally
-            {
-                conn.Close();
-            }
+            await conn.ExecuteAsync(CustomerSPDefinitions.MoveCustomer, parameters, commandType: CommandType.StoredProcedure);
         }
     }
 }

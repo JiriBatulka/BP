@@ -6,6 +6,6 @@ namespace BP.EntityRepositories
     public interface IUserIdentityRepository
     {
         public Task<UserIdentity> AddUserIdentityAsync(UserIdentity userIdentity);
-        public Task<(byte[] Hash, string Salt)> GetHashSaltAsync(string username);
+        public Task<UserIdentity> GetUserIdentityAsync(string username);
     }
 }

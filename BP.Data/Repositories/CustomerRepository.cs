@@ -1,6 +1,10 @@
 ﻿using BP.Converters;
 using BP.EntityRepositories;
+using BP.Enums;
+using BP.Models;
 using BP.StoredProcedures;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BP.Repositories
@@ -20,9 +24,15 @@ namespace BP.Repositories
             await _customerSP.AddCustomerAsync(_customerConverter.Convert(customer));
         }
 
+        public async Task<List<Customer>> GetCustomersAsync()
+        {
+            return await _customerSP.GetCustomersAsync();
+        }
+
         public async Task MoveCustomerAsync(Models.Customer customer)
         {
             await _customerSP.MoveCustomerAsync(_customerConverter.Convert(customer));
         }
     }
 }
+

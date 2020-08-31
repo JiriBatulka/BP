@@ -1,4 +1,5 @@
 ﻿using BP.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BP.ApiRepositories.Interfaces
@@ -7,5 +8,6 @@ namespace BP.ApiRepositories.Interfaces
     {
         public Task AddCustomerAsync(Customer customer);
         public Task MoveCustomerAsync(Customer customer);
+        Task<List<Customer>> GetCustomers();
     }
 }

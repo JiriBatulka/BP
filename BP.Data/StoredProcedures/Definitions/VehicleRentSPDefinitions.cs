@@ -4,8 +4,8 @@ namespace BP.StoredProcedures.Definitions
 {
     internal class VehicleRentSPDefinitions
     {
-        public static Dictionary<string, string> Definitions = new Dictionary<string, string>();
-        public static string AddVehicleRent = "AddVehicleRent";
+        public static Dictionary<string, string> Definitions { get; } = new Dictionary<string, string>();
+        public static string AddVehicleRent { get; } = "AddVehicleRent";
 
         static VehicleRentSPDefinitions()
         {
@@ -15,7 +15,7 @@ namespace BP.StoredProcedures.Definitions
         private static void CreateAddVehicleRent()
         {
             Definitions[AddVehicleRent] =
-                @"CREATE OR ALTER PROCEDURE [dbo].[AddVehicleRent]
+                $@"CREATE OR ALTER PROCEDURE [dbo].[{AddVehicleRent}]
                         @TimeFrom datetime2(7),
                         @TimeUntil datetime2(7),
                         @IsOwned bit,

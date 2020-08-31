@@ -39,6 +39,10 @@ namespace BP.Entities
                 .IsRequired();
 
             modelBuilder.Entity<UserIdentity>()
+                .HasIndex(b => b.Username)
+                .IsUnique();
+
+            modelBuilder.Entity<UserIdentity>()
                 .Property(x => x.Role)
                 .HasMaxLength(255)
                 .IsRequired();

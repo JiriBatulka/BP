@@ -1,0 +1,16 @@
+﻿@page "/customers"
+@inject GeneratorService _generatorService
+@inject CustomerRepository _customerRepository
+
+<h3>Customers</h3>
+<button class="btn btn-primary" @onclick="@(async () => await GenerateCustomer())">Add random customer</button>
+
+@code {
+    private List<Customer> customers;
+
+    private async Task GenerateCustomer()
+    {
+        Customer customer = _generatorService.GenerateCustomer();
+        await _customerRepository.AddCustomerAsync(customer);
+    }
+}

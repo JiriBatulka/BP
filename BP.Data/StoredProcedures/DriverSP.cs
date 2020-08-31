@@ -1,6 +1,7 @@
 ﻿using BP.Entities;
 using BP.StoredProcedures.Definitions;
 using Microsoft.Data.SqlClient;
+using System;
 using System.Data;
 using System.Threading.Tasks;
 
@@ -26,6 +27,8 @@ namespace BP.StoredProcedures
             cmd.Parameters.AddWithValue("@FirstName", driver.FirstName);
             cmd.Parameters.AddWithValue("@Surname", driver.Surname);
             cmd.Parameters.AddWithValue("@PhoneNumber", driver.PhoneNumber);
+            cmd.Parameters.AddWithValue("@Email", driver.Email);
+            cmd.Parameters.AddWithValue("@UserIdentityID", driver.UserIdentityID);
 
             try
             {

@@ -1,6 +1,7 @@
 ﻿using BP.Converters;
 using BP.EntityRepositories;
 using BP.Models;
+using BP.Services;
 using BP.StoredProcedures;
 using System.Threading.Tasks;
 
@@ -22,9 +23,9 @@ namespace BP.Repositories
             return userIdentity;
         }
 
-        public async Task<(byte[] Hash, string Salt)> GetHashSaltAsync(string username)
+        public async Task<UserIdentity> GetUserIdentityAsync(string username)
         {
-            return await _userIdentitySP.GetHashSaltAsync(username);
+            return _userIdentityConverter.Convert(await _userIdentitySP.GetUserIdentity(username));
         }
     }
 }

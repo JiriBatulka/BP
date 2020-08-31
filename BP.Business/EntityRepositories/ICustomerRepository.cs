@@ -1,4 +1,5 @@
 ﻿using BP.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BP.EntityRepositories
@@ -7,5 +8,6 @@ namespace BP.EntityRepositories
     {
         public Task AddCustomerAsync(Customer customer);
         public Task MoveCustomerAsync(Customer customer);
+        public Task<List<Customer>> GetCustomersAsync();
     }
 }

@@ -6,14 +6,15 @@
         {
             return new Entities.Customer
             {
-                CustomerID = customer.CustomerID,
+                CustomerID = customer.UserID,
                 FirstName = customer.FirstName,
                 Surname = customer.Surname,
                 PhoneNumber = customer.PhoneNumber,
                 CurrentLat = customer.CurrentLat,
                 CurrentLng = customer.CurrentLng,
                 IsActive = customer.IsActive,
-                UserIdentityID = customer.UserIdentityID
+                UserIdentityID = customer.UserIdentityID,
+                Email = customer.Email
             };
         }
     }

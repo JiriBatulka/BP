@@ -6,7 +6,7 @@
         {
             return new Entities.Driver
             {
-                DriverID = driver.DriverID,
+                DriverID = driver.UserID,
                 FirstName = driver.FirstName,
                 Surname = driver.Surname,
                 PhoneNumber = driver.PhoneNumber,

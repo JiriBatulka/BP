@@ -4,36 +4,34 @@ namespace BP.StoredProcedures.Definitions
 {
     internal class UserIdentitySPDefinitions
     {
-        public static Dictionary<string, string> Definitions = new Dictionary<string, string>();
-        public static string AddUserIdentity = "AddUserIdentity";
-        public static string GetHashSalt = "GetHashSalt";
+        public static Dictionary<string, string> Definitions { get; } = new Dictionary<string, string>();
+        public static string AddUserIdentity { get; } = "[dbo].[AddUserIdentity]";
+        public static string GetUserIdentityByUsername { get; } = "[dbo].[GetUserIdentityByUsername]";
 
         static UserIdentitySPDefinitions()
         {
             CreateAddUserIdentity();
-            CreateGetHashSalt();
+            CreateGetUserIdentityByUsername();
         }
 
-        private static void CreateGetHashSalt()
+        private static void CreateGetUserIdentityByUsername()
         {
-            Definitions[GetHashSalt] =
-                @"CREATE OR ALTER PROCEDURE [dbo].[GetHashSalt]
-                        @Username nvarchar(255),
-                        @PasswordHash varbinary(255) OUTPUT,
-                        @PasswordSalt nvarchar(255) OUTPUT
+            Definitions[GetUserIdentityByUsername] =
+                $@"CREATE OR ALTER PROCEDURE {GetUserIdentityByUsername}
+                        @Username nvarchar(255)
                     AS
                     BEGIN
                         SET NOCOUNT ON; 
-						SET @PasswordHash = CONVERT(varbinary, 'PasswordHash')
-                        SET @PasswordSalt = 'PasswordSalt'
-                        SELECT @PasswordHash, @PasswordSalt from [dbo].[UserIdentities] where Username = @Username;
+						SELECT *
+						FROM [dbo].UserIdentities
+                        WHERE Username=@Username;
                     END";
         }
 
         private static void CreateAddUserIdentity()
         {
             Definitions[AddUserIdentity] =
-                @"CREATE OR ALTER PROCEDURE [dbo].[AddUserIdentity]
+                $@"CREATE OR ALTER PROCEDURE {AddUserIdentity}
                         @Username nvarchar(255),
                         @PasswordHash varbinary(255),
                         @PasswordSalt nvarchar(255),

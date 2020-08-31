@@ -1,4 +1,3 @@
-using System.Text;
 using BP.ApiRepositories;
 using BP.ApiRepositories.Interfaces;
 using BP.Converters;
@@ -13,6 +12,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BP.Services;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System;
 
 namespace BP.API
 {
@@ -29,8 +32,61 @@ namespace BP.API
         public void ConfigureServices(IServiceCollection services)
         {
             AddCustomerServices(services);
+            AddDriverServices(services);
             AddUserIdentityServices(services);
+            AddUserServices(services);
             AddOtherServices(services);
+            ConfigureAuthentication(services);
+        }
+
+        private void AddUserServices(IServiceCollection services)
+        {
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<UserConverter>();
+            services.AddTransient<UserSP>();
+        }
+
+        private void ConfigureAuthentication(IServiceCollection services)
+        {
+            var key = Encoding.ASCII.GetBytes(Configuration.GetValue<string>("Security:JwtSecret"));
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("https://localhost:44377")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+
+                    });
+            });
+        }
+
+        private void AddDriverServices(IServiceCollection services)
+        {
+            services.AddTransient<IApiDriverRepository, ApiDriverRepository>();
+            services.AddTransient<IDriverRepository, DriverRepository>();
+            services.AddTransient<DriverSP>();
+            services.AddTransient<DriverDTOConverter>();
+            services.AddTransient<DriverConverter>();
         }
 
         private void AddOtherServices(IServiceCollection services)
@@ -46,10 +102,14 @@ namespace BP.API
             {
                 return new BusinessSettings(
                     Configuration.GetValue<string>("Security:PrivateEncryptionKey"),
-                    Configuration.GetValue<string>("Security:PublicEncryptionKey")
+                    Configuration.GetValue<string>("Security:PublicEncryptionKey"),
+                    Configuration.GetValue<string>("Security:JwtSecret"),
+                    Configuration.GetValue<string>("Security:ApiPassword")
                     );
             });
-            services.AddTransient<PasswordService>();
+            services.AddTransient<DecryptionService>();
+            services.AddTransient<AuthenticationService>();
+            services.AddTransient<ClaimsService>();
         }
 
         private void AddUserIdentityServices(IServiceCollection services)
@@ -79,11 +139,10 @@ namespace BP.API
             }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseCors();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

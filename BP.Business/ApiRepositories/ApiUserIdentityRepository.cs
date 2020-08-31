@@ -1,4 +1,5 @@
 ﻿using BP.ApiRepositories.Interfaces;
+using BP.Converters;
 using BP.EntityRepositories;
 using BP.Exceptions;
 using BP.Models;
@@ -10,21 +11,29 @@ namespace BP.ApiRepositories
     public class ApiUserIdentityRepository : IApiUserIdentityRepository
     {
         private readonly IUserIdentityRepository _userIdentityRepository;
-        private readonly PasswordService _passwordService;
+        private readonly IUserRepository _userRepository;
+        private readonly AuthenticationService _authenticationService;
+        private readonly UserConverter _userConverter;
 
-        public ApiUserIdentityRepository(IUserIdentityRepository userIdentityRepository, PasswordService passwordService)
+        public ApiUserIdentityRepository(IUserIdentityRepository userIdentityRepository, IUserRepository userRepository, AuthenticationService authenticationService, UserConverter userConverter)
         {
             _userIdentityRepository = userIdentityRepository;
-            _passwordService = passwordService;
+            _userRepository = userRepository;
+            _authenticationService = authenticationService;
+            _userConverter = userConverter;
         }
 
-        public async Task CheckUserIdentityAsync(UserIdentity userIdentity)
+        public async Task<string> GetAuthTokenAsync(UserIdentity userIdentity)
         {
-            userIdentity.DecryptedPassword = _passwordService.Decrypt(userIdentity.DecryptedPassword);
-            var hashAndSalt = await _userIdentityRepository.GetHashSaltAsync(userIdentity.Username);
-            if (_passwordService.PasswordCheck(userIdentity.DecryptedPassword, hashAndSalt.Salt, hashAndSalt.Hash))
+            if (!_authenticationService.IsValidApiPassword(userIdentity.ApiPassword))
             {
-                return;
+                throw new InvalidApiPasswordException();
+            }
+            User userDB = _userConverter.Convert(await _userIdentityRepository.GetUserIdentityAsync(userIdentity.Username));
+            userDB.UserID = await _userRepository.GetAssociatedUserIDAsync(userDB.UserIdentityID, userDB.Role);
+            if (_authenticationService.IsValidPassword(userIdentity.Password, userDB.PasswordSalt, userDB.PasswordHash))
+            {
+                return _authenticationService.GetToken(userDB);
             }
             else
             {

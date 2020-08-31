@@ -7,10 +7,10 @@ namespace BP.Models
     {
         public Guid UserIdentityID { get; set; }
         public string Username { get; set; }
-        public string EncryptedPassword { get; set; }
-        public string DecryptedPassword { get; set; }
+        public string Password { get; set; }
         public byte[] PasswordHash { get; set; }
         public string PasswordSalt { get; set; }
         public RoleEnum Role { get; set; }
+        public string ApiPassword { get; set; }
     }
 }

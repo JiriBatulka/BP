@@ -1,16 +1,25 @@
 ﻿using BP.DTOs;
 using BP.Models;
+using BP.Services;
 
 namespace BP.Converters
 {
     public class UserIdentityDTOConverter
     {
-        public UserIdentity Convert(UserIdentityDTO.CheckUserIdentityDTO checkUserIdentityDTO)
+        private readonly DecryptionService _decryptionService;
+
+        public UserIdentityDTOConverter(DecryptionService decryptionService)
+        {
+            _decryptionService = decryptionService;
+        }
+
+        public UserIdentity Convert(UserIdentityDTO.GetAuthTokenDTO getAuthTokenDTO)
         {
             return new UserIdentity
             {
-                EncryptedPassword = checkUserIdentityDTO.EncryptedPassword,
-                Username = checkUserIdentityDTO.Username
+                Password = _decryptionService.Decrypt(getAuthTokenDTO.EncryptedPassword),
+                Username = getAuthTokenDTO.Username,
+                ApiPassword = getAuthTokenDTO.ApiPassword
             };
         }
     }

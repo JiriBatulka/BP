@@ -5,6 +5,6 @@ namespace BP.ApiRepositories.Interfaces
 {
     public interface IApiUserIdentityRepository
     {
-        public Task CheckUserIdentityAsync(UserIdentity userIdentity);
+        public Task<string> GetAuthTokenAsync(UserIdentity userIdentity);
     }
 }

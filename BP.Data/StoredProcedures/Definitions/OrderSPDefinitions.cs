@@ -4,8 +4,8 @@ namespace BP.StoredProcedures.Definitions
 {
     internal class OrderSPDefinitions
     {
-        public static Dictionary<string, string> Definitions = new Dictionary<string, string>();
-        public static string AddOrder = "AddOrder";
+        public static Dictionary<string, string> Definitions { get; } = new Dictionary<string, string>();
+        public static string AddOrder { get; } = "AddOrder";
 
         static OrderSPDefinitions()
         {
@@ -15,7 +15,7 @@ namespace BP.StoredProcedures.Definitions
         private static void CreateAddOrder()
         {
             Definitions[AddOrder] =
-                @"CREATE OR ALTER PROCEDURE [dbo].[AddOrder]
+                $@"CREATE OR ALTER PROCEDURE [dbo].[{AddOrder}]
                         @StartTime datetime2(7),
                         @VehicleArriveEstimate datetime2(7),
                         @EndTimeEstimate datetime2(7),
