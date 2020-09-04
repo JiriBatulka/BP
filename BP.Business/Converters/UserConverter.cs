@@ -13,8 +13,7 @@ namespace BP.Converters
                 UserIdentityID = userIdentity.UserIdentityID,
                 Username = userIdentity.Username,
                 Role = userIdentity.Role,
-                ApiPassword = userIdentity.ApiPassword,
-                Password = userIdentity.Password,
+                Password = userIdentity.Password
             };
         }
     }

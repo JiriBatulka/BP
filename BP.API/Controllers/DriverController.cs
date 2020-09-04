@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BP.ApiRepositories.Interfaces;
 using BP.Converters;
 using BP.DTOs;
+using BP.ModelRepositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,13 +14,13 @@ namespace BP.Controllers
     [ApiController]
     public class DriverController : ControllerBase
     {
-        private readonly IApiDriverRepository _driverRepository;
+        private readonly DriverModelRepository _driverModelRepository;
         private readonly DriverDTOConverter _driverDTOConverter;
         private readonly CustomLogger _logger;
 
-        public DriverController(IApiDriverRepository driverRepository, DriverDTOConverter driverDTOConverter, CustomLogger logger)
+        public DriverController(DriverModelRepository driverModelRepository, DriverDTOConverter driverDTOConverter, CustomLogger logger)
         {
-            _driverRepository = driverRepository;
+            _driverModelRepository = driverModelRepository;
             _driverDTOConverter = driverDTOConverter;
             _logger = logger;
         }
@@ -30,7 +30,7 @@ namespace BP.Controllers
         {
             try
             {
-                await _driverRepository.AddDriverAsync(_driverDTOConverter.Convert(value));
+                await _driverModelRepository.AddDriverAsync(_driverDTOConverter.Convert(value));
                 return Ok();
             }
             catch (Exception ex)
@@ -46,7 +46,7 @@ namespace BP.Controllers
         {
             try
             {
-                return Ok(await _driverRepository.GetDriversAsync());
+                return Ok(await _driverModelRepository.GetDriversAsync());
             }
             catch (Exception ex)
             {

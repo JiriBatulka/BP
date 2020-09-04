@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using BP.Simulation.Services;
 using BP.Simulation.DTOs.Converters;
 using BP.Simulation.Repositories;
+using BP.Simulation.Shared;
 
 namespace BP.Simulation
 {
@@ -19,7 +20,7 @@ namespace BP.Simulation
 
             HttpClient client = new HttpClient()
             {
-                BaseAddress = new Uri("https://localhost:51333/")
+                BaseAddress = new Uri("https://localhost:51039/")
             };
             builder.Services.AddScoped(sp => client);
 
@@ -29,6 +30,7 @@ namespace BP.Simulation
             builder.Services.AddTransient<CustomerDTOConverter>();
             builder.Services.AddTransient<DecryptionService>();
             builder.Services.AddTransient<CustomerRepository>();
+            builder.Services.AddSingleton<EntitesLists>();
             await builder.Build().RunAsync();
         }
     }

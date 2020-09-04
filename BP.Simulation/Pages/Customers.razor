@@ -1,13 +1,23 @@
 ﻿@page "/customers"
 @inject GeneratorService _generatorService
 @inject CustomerRepository _customerRepository
-@inject 
+@inject EntitesLists EntitesLists
 
 <h3>Customers</h3>
 <button class="btn btn-primary" @onclick="@(async () => await GenerateCustomer())">Add random customer</button>
 
+<ul>
+    @foreach (Customer customer in EntitesLists.Customers)
+    {
+        <li>@customer.Surname</li>
+    }
+</ul>
+
 @code {
-    private IEnumerable<Customer> customers;
+    protected override async Task OnInitializedAsync()
+    {
+        EntitesLists.Customers.AddRange(await _customerRepository.GetCustomersAsync());
+    }
 
     private async Task GenerateCustomer()
     {
