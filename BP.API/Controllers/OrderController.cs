@@ -1,23 +1,28 @@
-﻿using System.Threading.Tasks;
-using BP.ApiRepositories.Interfaces;
+﻿using System;
+using System.Threading.Tasks;
 using BP.Converters;
 using BP.DTOs;
+using BP.ModelRepositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BP.Controllers
 {
     [Produces("application/json")]
     [Route("api/order")]
+    [Authorize(Roles = "Customer,Driver")]
     [ApiController]
     public class OrderController : ControllerBase
     {
-        private readonly IApiOrderRepository _orderRepository;
+        private readonly OrderModelRepository _orderModelRepository;
         private readonly OrderDTOConverter _orderDTOConverter;
+        private readonly CustomLogger _logger;
 
-        public OrderController(IApiOrderRepository orderRepository, OrderDTOConverter orderDTOConverter)
+        public OrderController(OrderModelRepository orderModelRepository, OrderDTOConverter orderDTOConverter, CustomLogger logger)
         {
-            _orderRepository = orderRepository;
+            _orderModelRepository = orderModelRepository;
             _orderDTOConverter = orderDTOConverter;
+            _logger = logger;
         }
 
         [HttpPost("add")]
@@ -25,11 +30,12 @@ namespace BP.Controllers
         {
             try
             {
-                await _orderRepository.AddOrderAsync(_orderDTOConverter.Convert(value));
+                await _orderModelRepository.AddOrderAsync(_orderDTOConverter.Convert(value));
                 return Ok();
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogApiException(ex);
                 return StatusCode(500);
             }
         }

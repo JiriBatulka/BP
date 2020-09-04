@@ -1,18 +1,16 @@
 ﻿using BP.Converters;
 using BP.EntityRepositories;
-using BP.Enums;
 using BP.Models;
 using BP.StoredProcedures;
-using System;
 using System.Threading.Tasks;
 
-namespace BP.Repositories
+namespace BP.EntityRepositories
 {
-    public class DriverRepository : IDriverRepository
+    public class DriverEntityRepository : IDriverEntityRepository
     {
         private readonly DriverConverter _driverConverter;
         private readonly DriverSP _driverSP;
-        public DriverRepository(DriverSP driverSP, DriverConverter driverConverter)
+        public DriverEntityRepository(DriverSP driverSP, DriverConverter driverConverter)
         {
             _driverSP = driverSP;
             _driverConverter = driverConverter;

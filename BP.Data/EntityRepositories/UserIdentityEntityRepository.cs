@@ -1,17 +1,16 @@
 ﻿using BP.Converters;
 using BP.EntityRepositories;
 using BP.Models;
-using BP.Services;
 using BP.StoredProcedures;
 using System.Threading.Tasks;
 
-namespace BP.Repositories
+namespace BP.EntityRepositories
 {
-    public class UserIdentityRepository : IUserIdentityRepository
+    public class UserIdentityEntityRepository : IUserIdentityEntityRepository
     {
         private readonly UserIdentityConverter _userIdentityConverter;
         private readonly UserIdentitySP _userIdentitySP;
-        public UserIdentityRepository(UserIdentitySP userIdentitySP, UserIdentityConverter userIdentityConverter)
+        public UserIdentityEntityRepository(UserIdentitySP userIdentitySP, UserIdentityConverter userIdentityConverter)
         {
             _userIdentitySP = userIdentitySP;
             _userIdentityConverter = userIdentityConverter;

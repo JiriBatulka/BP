@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
-using BP.ApiRepositories.Interfaces;
 using BP.Converters;
 using BP.DTOs;
-using BP.Enums;
 using BP.Exceptions;
+using BP.ModelRepositories;
 using BP.Models;
 using BP.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -21,18 +15,18 @@ namespace BP.Controllers
 {
     [Produces("application/json")]
     [Route("api/customer")]
-    [Authorize(Roles = "Customer")]
+    //[Authorize(Roles = "Customer")]
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        private readonly IApiCustomerRepository _customerRepository;
+        private readonly CustomerModelRepository _customerModelRepository;
         private readonly CustomerDTOConverter _customerDTOConverter;
         private readonly CustomLogger _logger;
         private readonly ClaimsService _claimsService;
 
-        public CustomerController(IApiCustomerRepository customerRepository, CustomerDTOConverter customerDTOConverter, CustomLogger logger, ClaimsService claimsService)
+        public CustomerController(CustomerModelRepository customerModelRepository, CustomerDTOConverter customerDTOConverter, CustomLogger logger, ClaimsService claimsService)
         {
-            _customerRepository = customerRepository;
+            _customerModelRepository = customerModelRepository;
             _customerDTOConverter = customerDTOConverter;
             _logger = logger;
             _claimsService = claimsService;
@@ -58,16 +52,12 @@ namespace BP.Controllers
                 //    rsa.PersistKeyInCsp = false;
                 //}
 
-                await _customerRepository.AddCustomerAsync(_customerDTOConverter.Convert(value));
+                await _customerModelRepository.AddCustomerAsync(_customerDTOConverter.Convert(value));
                 return StatusCode(201);
             }
             catch (UniqueConstraintException ex)
             {
                 return StatusCode(409, ex.Message);
-            }
-            catch (InvalidApiPasswordException)
-            {
-                return StatusCode(401);
             }
             catch (Exception ex)
             {
@@ -83,7 +73,7 @@ namespace BP.Controllers
             {
                 Customer customer = _customerDTOConverter.Convert(value);
                 customer.UserID = _claimsService.GetName(User.Claims);
-                await _customerRepository.MoveCustomerAsync(customer);
+                await _customerModelRepository.MoveCustomerAsync(customer);
                 return Ok();
             }
             catch (Exception ex)
@@ -93,13 +83,13 @@ namespace BP.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpGet("get")]
         public async Task<IActionResult> GetCustomersAsync()
         {
             try
             {
-                return Ok(await _customerRepository.GetCustomers();
+                return Ok(_customerDTOConverter.Convert(await _customerModelRepository.GetCustomersAsync()));
             }
             catch (Exception ex)
             {

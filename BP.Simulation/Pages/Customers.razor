@@ -1,12 +1,13 @@
 ﻿@page "/customers"
 @inject GeneratorService _generatorService
 @inject CustomerRepository _customerRepository
+@inject 
 
 <h3>Customers</h3>
 <button class="btn btn-primary" @onclick="@(async () => await GenerateCustomer())">Add random customer</button>
 
 @code {
-    private List<Customer> customers;
+    private IEnumerable<Customer> customers;
 
     private async Task GenerateCustomer()
     {

@@ -1,9 +1,9 @@
 ﻿using BP.Models;
 using System.Threading.Tasks;
 
-namespace BP.ApiRepositories.Interfaces
+namespace BP.EntityRepositories
 {
-    public interface IApiDriverRepository
+    public interface IDriverEntityRepository
     {
         public Task AddDriverAsync(Driver driver);
     }

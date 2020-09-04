@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace BP.Services
+namespace BP.Simulation.Services
 {
     public class DecryptionService
     {

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace BP.StoredProcedures.Definitions
 {
@@ -10,12 +9,26 @@ namespace BP.StoredProcedures.Definitions
         public static string AddCustomer { get; } = "[dbo].[AddCustomer]";
         public static string MoveCustomer { get; } = "[dbo].[MoveCustomer]";
         public static string GetCustomerIDByUserIdentityID { get; } = "[dbo].[GetCustomerIDByUserIdentityID]";
+        public static string GetCustomers { get; } = "[dbo].[GetCustomers]";
 
-        static CustomerSPDefinitions()
+        public static void CreateDefinitions()
         {
             CreateAddCustomer();
             CreateMoveCustomer();
             CreateGetCustomerByUserIdentityID();
+            CreateGetCustomers();
+        }
+
+        private static void CreateGetCustomers()
+        {
+            Definitions[GetCustomers] =
+                    $@"CREATE OR ALTER PROCEDURE {GetCustomers}
+                    AS
+                    BEGIN
+                        SET NOCOUNT ON; 
+                        SELECT *
+                        FROM [dbo].[Customers]  
+                    END";
         }
 
         private static void CreateGetCustomerByUserIdentityID()

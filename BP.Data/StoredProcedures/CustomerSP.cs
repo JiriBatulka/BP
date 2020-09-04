@@ -2,7 +2,6 @@
 using BP.StoredProcedures.Definitions;
 using Dapper;
 using Microsoft.Data.SqlClient;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
@@ -56,12 +55,10 @@ namespace BP.StoredProcedures
             await conn.ExecuteAsync(CustomerSPDefinitions.AddCustomer, parameters, commandType: CommandType.StoredProcedure);
         }
 
-        internal Task<Task<Task<List<Customer>>>> GetCustomersAsync()
+        public async Task<IEnumerable<Customer>> GetCustomersAsync()
         {
             using IDbConnection conn = new SqlConnection(_dataSettings.ConnectionString);
-            var parameters = new DynamicParameters();
-            return await conn.QueryFirstOrDefaultAsync<List<Customer>($"dbo.{UserIdentitySPDefinitions.GetUserIdentityByUsername}", parameters,
-                commandType: CommandType.StoredProcedure);
+            return await conn.QueryAsync<Customer>(CustomerSPDefinitions.GetCustomers, commandType: CommandType.StoredProcedure);
         }
 
         public async Task MoveCustomerAsync(Customer customer)

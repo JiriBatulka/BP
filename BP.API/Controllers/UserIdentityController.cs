@@ -1,27 +1,27 @@
 ﻿using System;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
-using BP.ApiRepositories.Interfaces;
 using BP.Converters;
 using BP.DTOs;
 using BP.Exceptions;
+using BP.ModelRepositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BP.Controllers
 {
     [Produces("application/json")]
     [Route("api/useridentity")]
+    [Authorize(Roles = "Customer,Driver")]
     [ApiController]
     public class UserIdentityController : ControllerBase
     {
-        private readonly IApiUserIdentityRepository _userIdentityRepository;
+        private readonly UserIdentityModelRepository _userIdentityModelRepository;
         private readonly UserIdentityDTOConverter _userIdentityDTOConverter;
         private readonly CustomLogger _logger;
 
-        public UserIdentityController(IApiUserIdentityRepository userIdentityRepository, UserIdentityDTOConverter userIdentityDTOConverter, CustomLogger logger)
+        public UserIdentityController(UserIdentityModelRepository userIdentityModelRepository, UserIdentityDTOConverter userIdentityDTOConverter, CustomLogger logger)
         {
-            _userIdentityRepository = userIdentityRepository;
+            _userIdentityModelRepository = userIdentityModelRepository;
             _userIdentityDTOConverter = userIdentityDTOConverter;
             _logger = logger;
         }
@@ -45,13 +45,9 @@ namespace BP.Controllers
                 //    rsa.PersistKeyInCsp = false;
                 //}
 
-                return Ok(await _userIdentityRepository.GetAuthTokenAsync(_userIdentityDTOConverter.Convert(value)));
+                return Ok(await _userIdentityModelRepository.GetAuthTokenAsync(_userIdentityDTOConverter.Convert(value)));
             }
             catch (InvalidPasswordException)
-            {
-                return StatusCode(401);
-            }
-            catch (InvalidApiPasswordException)
             {
                 return StatusCode(401);
             }

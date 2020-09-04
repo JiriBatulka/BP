@@ -271,3 +271,28 @@ System.InvalidOperationException: Unable to resolve service for type 'BP.Service
 2020-08-27 19:39:13.230 +02:00 [WRN] Storing keys in a directory 'C:\Users\ContainerUser\AppData\Local\ASP.NET\DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed.
 2020-08-27 19:49:38.369 +02:00 [WRN] Storing keys in a directory 'C:\Users\ContainerUser\AppData\Local\ASP.NET\DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed.
 2020-08-27 19:49:56.543 +02:00 [WRN] Storing keys in a directory 'C:\Users\ContainerUser\AppData\Local\ASP.NET\DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed.
+2020-09-03 15:52:59.360 +02:00 [WRN] Storing keys in a directory 'C:\Users\ContainerUser\AppData\Local\ASP.NET\DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed.
+2020-09-03 15:53:32.429 +02:00 [WRN] Storing keys in a directory 'C:\Users\ContainerUser\AppData\Local\ASP.NET\DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed.
+2020-09-03 15:58:08.327 +02:00 [WRN] Storing keys in a directory 'C:\Users\ContainerUser\AppData\Local\ASP.NET\DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed.
+2020-09-03 15:58:41.063 +02:00 [ERR] 
+Message: Invalid type owner for DynamicMethod.
+Trace:    at System.Reflection.Emit.DynamicMethod.Init(String name, MethodAttributes attributes, CallingConventions callingConvention, Type returnType, Type[] signature, Type owner, Module m, Boolean skipVisibility, Boolean transparentMethod)
+   at System.Reflection.Emit.DynamicMethod..ctor(String name, Type returnType, Type[] parameterTypes, Type owner, Boolean skipVisibility)
+   at Dapper.SqlMapper.GetTypeDeserializerImpl(Type type, IDataReader reader, Int32 startBound, Int32 length, Boolean returnNullIfFirstMissing) in /_/Dapper/SqlMapper.cs:line 3063
+   at Dapper.SqlMapper.TypeDeserializerCache.GetReader(IDataReader reader, Int32 startBound, Int32 length, Boolean returnNullIfFirstMissing) in /_/Dapper/SqlMapper.TypeDeserializerCache.cs:line 153
+   at Dapper.SqlMapper.TypeDeserializerCache.GetReader(Type type, IDataReader reader, Int32 startBound, Int32 length, Boolean returnNullIfFirstMissing) in /_/Dapper/SqlMapper.TypeDeserializerCache.cs:line 50
+   at Dapper.SqlMapper.GetTypeDeserializer(Type type, IDataReader reader, Int32 startBound, Int32 length, Boolean returnNullIfFirstMissing) in /_/Dapper/SqlMapper.cs:line 3026
+   at Dapper.SqlMapper.GetDeserializer(Type type, IDataReader reader, Int32 startBound, Int32 length, Boolean returnNullIfFirstMissing) in /_/Dapper/SqlMapper.cs:line 1789
+   at Dapper.SqlMapper.QueryAsync[T](IDbConnection cnn, Type effectiveType, CommandDefinition command) in /_/Dapper/SqlMapper.Async.cs:line 427
+   at BP.StoredProcedures.CustomerSP.GetCustomersAsync() in C:\Users\jbatu\Documents\GitHub\BP\BP.Data\StoredProcedures\CustomerSP.cs:line 61
+   at BP.Repositories.CustomerRepository.GetCustomersAsync() in C:\Users\jbatu\Documents\GitHub\BP\BP.Data\Repositories\CustomerRepository.cs:line 28
+   at BP.ApiRepositories.ApiCustomerRepository.GetCustomersAsync() in C:\Users\jbatu\Documents\GitHub\BP\BP.Business\ApiRepositories\ApiCustomerRepository.cs:line 42
+   at BP.Controllers.CustomerController.GetCustomersAsync() in C:\Users\jbatu\Documents\GitHub\BP\BP.API\Controllers\CustomerController.cs:line 96
+Time: "2020-09-03T13:58:41.0633666Z"
+2020-09-03 16:00:30.846 +02:00 [WRN] Storing keys in a directory 'C:\Users\ContainerUser\AppData\Local\ASP.NET\DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed.
+2020-09-03 16:11:14.320 +02:00 [WRN] Storing keys in a directory 'C:\Users\ContainerUser\AppData\Local\ASP.NET\DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed.
+2020-09-03 16:15:14.138 +02:00 [WRN] Storing keys in a directory 'C:\Users\ContainerUser\AppData\Local\ASP.NET\DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed.
+2020-09-03 17:06:43.733 +02:00 [WRN] Storing keys in a directory 'C:\Users\ContainerUser\AppData\Local\ASP.NET\DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed.
+2020-09-03 17:11:30.231 +02:00 [WRN] Storing keys in a directory 'C:\Users\ContainerUser\AppData\Local\ASP.NET\DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed.
+2020-09-04 11:30:22.696 +02:00 [WRN] Storing keys in a directory 'C:\Users\ContainerUser\AppData\Local\ASP.NET\DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed.
+2020-09-04 11:38:15.801 +02:00 [WRN] Storing keys in a directory 'C:\Users\ContainerUser\AppData\Local\ASP.NET\DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed.

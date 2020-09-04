@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace BP.EntityRepositories
 {
-    public interface IVehicleRentRepository
+    public interface IVehicleRentEntityRepository
     {
         public Task AddVehicleRentAsync(VehicleRent vehicleRent);
     }

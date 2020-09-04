@@ -1,7 +1,6 @@
 ﻿using BP.Models;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -37,18 +36,6 @@ namespace BP.Services
             };
             SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
-        }
-
-        public bool IsValidApiPassword(string apiPassword)
-        {
-            if (apiPassword == _businessSettings.ApiPassword)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
 
         public bool IsValidPassword(string password, string dbSalt, byte[] dbHash)

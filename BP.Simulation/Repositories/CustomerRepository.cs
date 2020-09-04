@@ -1,14 +1,12 @@
-﻿using BP.DTOs.Converters;
-using BP.Models;
-using System;
+﻿using BP.Simulation.DTOs.Converters;
+using BP.Simulation.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace BP.Repositories
+namespace BP.Simulation.Repositories
 {
     public class CustomerRepository
     {
@@ -25,6 +23,11 @@ namespace BP.Repositories
         {
             StringContent customerContent = new StringContent(JsonSerializer.Serialize(_customerDTOConverter.Convert(customer)), Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync($"api/customer/add", customerContent);
+        }
+
+        public async Task<IEnumerable<Customer>> GetCustomersAsync()
+        {
+
         }
     }
 }

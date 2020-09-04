@@ -8,7 +8,7 @@ namespace BP.StoredProcedures.Definitions
         public static string AddVehicle { get; } = "AddVehicle";
         public static string MoveVehicle { get; } = "MoveVehicle";
 
-        static VehicleSPDefinitions()
+        public static void CreateDefinitions()
         {
             CreateAddVehicle();
             CreateMoveVehicle();

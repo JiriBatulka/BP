@@ -2,17 +2,15 @@
 using BP.Enums;
 using BP.StoredProcedures;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace BP.Repositories
+namespace BP.EntityRepositories
 {
-    public class UserRepository : IUserRepository
+    public class UserEntityRepository : IUserEntityRepository
     {
         private readonly UserSP _userSP;
 
-        public UserRepository(UserSP userSP)
+        public UserEntityRepository(UserSP userSP)
         {
             _userSP = userSP;
         }

@@ -1,5 +1,7 @@
 ﻿using BP.Models;
 using BP.Services;
+using System.Collections.Generic;
+using System.Linq;
 using static BP.DTOs.CustomerDTO;
 
 namespace BP.Converters
@@ -34,6 +36,25 @@ namespace BP.Converters
                 CurrentLat = moveCustomerDTO.TargetLat,
                 CurrentLng = moveCustomerDTO.TargetLng,
             };
+        }
+
+        public GetCustomersDTO Convert(Customer customer)
+        {
+            return new GetCustomersDTO()
+            {
+                CurrentLat = customer.CurrentLat,
+                CurrentLng = customer.CurrentLng,
+                Email = customer.Email,
+                FirstName = customer.FirstName,
+                IsActive = customer.IsActive,
+                PhoneNumber = customer.PhoneNumber,
+                Surname = customer.Surname
+            };
+        }
+
+        public IEnumerable<GetCustomersDTO> Convert(IEnumerable<Customer> customers)
+        {
+            return customers.Select(x => Convert(x));
         }
     }
 }

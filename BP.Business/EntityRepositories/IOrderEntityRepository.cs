@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace BP.EntityRepositories
 {
-    public interface IOrderRepository
+    public interface IOrderEntityRepository
     {
         public Task AddOrderAsync(Order order);
     }

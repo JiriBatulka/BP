@@ -4,13 +4,13 @@ using BP.Models;
 using BP.StoredProcedures;
 using System.Threading.Tasks;
 
-namespace BP.Repositories
+namespace BP.EntityRepositories
 {
-    public class VehicleRentRepository : IVehicleRentRepository
+    public class VehicleRentEntityRepository : IVehicleRentEntityRepository
     {
         private readonly VehicleRentConverter _vehicleRentConverter;
         private readonly VehicleRentSP _vehicleRentSP;
-        public VehicleRentRepository(VehicleRentSP vehicleRentSP, VehicleRentConverter vehicleRentConverter)
+        public VehicleRentEntityRepository(VehicleRentSP vehicleRentSP, VehicleRentConverter vehicleRentConverter)
         {
             _vehicleRentSP = vehicleRentSP;
             _vehicleRentConverter = vehicleRentConverter;

@@ -7,7 +7,7 @@ namespace BP.StoredProcedures.Definitions
         public static Dictionary<string, string> Definitions { get; } = new Dictionary<string, string>();
         public static string AddVehicleRent { get; } = "AddVehicleRent";
 
-        static VehicleRentSPDefinitions()
+        public static void CreateDefinitions()
         {
             CreateAddVehicleRent();
         }

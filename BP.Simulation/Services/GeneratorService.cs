@@ -1,13 +1,7 @@
-﻿using BP.Models;
+﻿using BP.Simulation.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using System.Net.Http;
-using System.Text.Json;
 
-namespace BP.Services
+namespace BP.Simulation.Services
 {
     public class GeneratorService
     {

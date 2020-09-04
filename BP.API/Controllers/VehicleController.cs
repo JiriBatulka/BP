@@ -1,23 +1,28 @@
 ﻿using System.Threading.Tasks;
-using BP.ApiRepositories.Interfaces;
 using BP.Converters;
 using Microsoft.AspNetCore.Mvc;
 using BP.DTOs;
+using Microsoft.AspNetCore.Authorization;
+using System;
+using BP.ModelRepositories;
 
 namespace BP.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
+    [Authorize(Roles = "Driver")]
     [ApiController]
     public class VehicleController : ControllerBase
     {
-        private readonly IApiVehicleRepository _vehicleRepository;
+        private readonly VehicleModelRepository _vehicleModelRepository;
         private readonly VehicleDTOConverter _vehicleDTOConverter;
+        private readonly CustomLogger _logger;
 
-        public VehicleController(IApiVehicleRepository vehicleRepository, VehicleDTOConverter vehicleDTOConverter)
+        public VehicleController(VehicleModelRepository vehicleModelRepository, VehicleDTOConverter vehicleDTOConverter, CustomLogger logger)
         {
-            _vehicleRepository = vehicleRepository;
+            _vehicleModelRepository = vehicleModelRepository;
             _vehicleDTOConverter = vehicleDTOConverter;
+            _logger = logger;
         }
 
         [HttpGet("add")]
@@ -25,7 +30,7 @@ namespace BP.Controllers
         {
             try
             {
-                await _vehicleRepository.AddVehicleAsync(_vehicleDTOConverter.Convert(value));
+                await _vehicleModelRepository.AddVehicleAsync(_vehicleDTOConverter.Convert(value));
                 return Ok();
             }
             catch
@@ -39,11 +44,12 @@ namespace BP.Controllers
         {
             try
             {
-                await _vehicleRepository.MoveVehicleAsync(_vehicleDTOConverter.Convert(value));
+                await _vehicleModelRepository.MoveVehicleAsync(_vehicleDTOConverter.Convert(value));
                 return Ok();
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogApiException(ex);
                 return StatusCode(500);
             }
         }

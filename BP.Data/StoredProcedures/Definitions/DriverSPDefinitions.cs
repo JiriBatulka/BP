@@ -7,7 +7,7 @@ namespace BP.StoredProcedures.Definitions
         public static Dictionary<string, string> Definitions { get; } = new Dictionary<string, string>();
         public static string AddDriver { get; } = "AddDriver";
 
-        static DriverSPDefinitions()
+        public static void CreateDefinitions()
         {
             CreateAddDriver();
         }

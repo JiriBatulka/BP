@@ -1,23 +1,28 @@
-﻿using System.Threading.Tasks;
-using BP.ApiRepositories.Interfaces;
+﻿using System;
+using System.Threading.Tasks;
 using BP.Converters;
 using BP.DTOs;
+using BP.ModelRepositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BP.Controllers
 {
     [Produces("application/json")]
     [Route("api/vehiclerent")]
+    [Authorize(Roles = "Driver")]
     [ApiController]
     public class VehicleRentController : ControllerBase
     {
-        private readonly IApiVehicleRentRepository _vehicleRentRepository;
+        private readonly VehicleRentModelRepository _vehicleRentModelRepository;
         private readonly VehicleRentDTOConverter _vehicleRentDTOConverter;
+        private readonly CustomLogger _logger;
 
-        public VehicleRentController(IApiVehicleRentRepository vehicleRentRepository, VehicleRentDTOConverter vehicleRentDTOConverter)
+        public VehicleRentController(VehicleRentModelRepository vehicleRentModelRepository, VehicleRentDTOConverter vehicleRentDTOConverter, CustomLogger logger)
         {
-            _vehicleRentRepository = vehicleRentRepository;
+            _vehicleRentModelRepository = vehicleRentModelRepository;
             _vehicleRentDTOConverter = vehicleRentDTOConverter;
+            _logger = logger;
         }
 
         [HttpGet("add")]
@@ -25,11 +30,12 @@ namespace BP.Controllers
         {
             try
             {
-                await _vehicleRentRepository.AddVehicleRentAsync(_vehicleRentDTOConverter.Convert(value));
+                await _vehicleRentModelRepository.AddVehicleRentAsync(_vehicleRentDTOConverter.Convert(value));
                 return Ok();
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogApiException(ex);
                 return StatusCode(500);
             }
         }

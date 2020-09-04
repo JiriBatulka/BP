@@ -8,7 +8,7 @@ namespace BP.StoredProcedures.Definitions
         public static string AddUserIdentity { get; } = "[dbo].[AddUserIdentity]";
         public static string GetUserIdentityByUsername { get; } = "[dbo].[GetUserIdentityByUsername]";
 
-        static UserIdentitySPDefinitions()
+        public static void CreateDefinitions()
         {
             CreateAddUserIdentity();
             CreateGetUserIdentityByUsername();

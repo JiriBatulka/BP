@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BP.ApiRepositories.Interfaces
+namespace BP.EntityRepositories
 {
-    public interface IApiCustomerRepository
+    public interface ICustomerEntityRepository
     {
         public Task AddCustomerAsync(Customer customer);
         public Task MoveCustomerAsync(Customer customer);
-        Task<List<Customer>> GetCustomers();
+        public Task<IEnumerable<Customer>> GetCustomersAsync();
     }
 }

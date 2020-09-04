@@ -1,19 +1,17 @@
 ﻿using BP.Converters;
 using BP.EntityRepositories;
-using BP.Enums;
 using BP.Models;
 using BP.StoredProcedures;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BP.Repositories
+namespace BP.EntityRepositories
 {
-    public class CustomerRepository : ICustomerRepository
+    public class CustomerEntityRepository : ICustomerEntityRepository
     {
         private readonly CustomerConverter _customerConverter;
         private readonly CustomerSP _customerSP;
-        public CustomerRepository(CustomerSP customerSP, CustomerConverter customerConverter)
+        public CustomerEntityRepository(CustomerSP customerSP, CustomerConverter customerConverter)
         {
             _customerSP = customerSP;
             _customerConverter = customerConverter;
@@ -24,15 +22,18 @@ namespace BP.Repositories
             await _customerSP.AddCustomerAsync(_customerConverter.Convert(customer));
         }
 
-        public async Task<List<Customer>> GetCustomersAsync()
+
+        public async Task<IEnumerable<Customer>> GetCustomersAsync()
         {
-            return await _customerSP.GetCustomersAsync();
+            return _customerConverter.Convert(await _customerSP.GetCustomersAsync());
         }
+
 
         public async Task MoveCustomerAsync(Models.Customer customer)
         {
             await _customerSP.MoveCustomerAsync(_customerConverter.Convert(customer));
         }
+
     }
 }
 

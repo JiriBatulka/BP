@@ -1,10 +1,7 @@
 ﻿using BP.Enums;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace BP.Models
+namespace BP.Simulation.Models
 {
     public class User
     {

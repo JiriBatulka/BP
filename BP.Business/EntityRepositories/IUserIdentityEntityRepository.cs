@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace BP.EntityRepositories
 {
-    public interface IUserIdentityRepository
+    public interface IUserIdentityEntityRepository
     {
         public Task<UserIdentity> AddUserIdentityAsync(UserIdentity userIdentity);
         public Task<UserIdentity> GetUserIdentityAsync(string username);

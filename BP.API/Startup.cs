@@ -1,9 +1,6 @@
-using BP.ApiRepositories;
-using BP.ApiRepositories.Interfaces;
 using BP.Converters;
 using BP.Entities;
 using BP.EntityRepositories;
-using BP.Repositories;
 using BP.StoredProcedures;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,7 +12,7 @@ using BP.Services;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System;
+using BP.ModelRepositories;
 
 namespace BP.API
 {
@@ -41,7 +38,7 @@ namespace BP.API
 
         private void AddUserServices(IServiceCollection services)
         {
-            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IUserEntityRepository, UserEntityRepository>();
             services.AddTransient<UserConverter>();
             services.AddTransient<UserSP>();
         }
@@ -82,8 +79,8 @@ namespace BP.API
 
         private void AddDriverServices(IServiceCollection services)
         {
-            services.AddTransient<IApiDriverRepository, ApiDriverRepository>();
-            services.AddTransient<IDriverRepository, DriverRepository>();
+            services.AddTransient<DriverModelRepository>();
+            services.AddTransient<IDriverEntityRepository, DriverEntityRepository>();
             services.AddTransient<DriverSP>();
             services.AddTransient<DriverDTOConverter>();
             services.AddTransient<DriverConverter>();
@@ -103,8 +100,7 @@ namespace BP.API
                 return new BusinessSettings(
                     Configuration.GetValue<string>("Security:PrivateEncryptionKey"),
                     Configuration.GetValue<string>("Security:PublicEncryptionKey"),
-                    Configuration.GetValue<string>("Security:JwtSecret"),
-                    Configuration.GetValue<string>("Security:ApiPassword")
+                    Configuration.GetValue<string>("Security:JwtSecret")
                     );
             });
             services.AddTransient<DecryptionService>();
@@ -114,8 +110,8 @@ namespace BP.API
 
         private void AddUserIdentityServices(IServiceCollection services)
         {
-            services.AddTransient<IApiUserIdentityRepository, ApiUserIdentityRepository>();
-            services.AddTransient<IUserIdentityRepository, UserIdentityRepository>();
+            services.AddTransient<UserIdentityModelRepository>();
+            services.AddTransient<EntityRepositories.IUserIdentityEntityRepository, UserIdentityEntityRepository>();
             services.AddTransient<UserIdentitySP>();
             services.AddTransient<UserIdentityDTOConverter>();
             services.AddTransient<UserIdentityConverter>();
@@ -123,8 +119,8 @@ namespace BP.API
 
         private void AddCustomerServices(IServiceCollection services)
         {
-            services.AddTransient<IApiCustomerRepository, ApiCustomerRepository>();
-            services.AddTransient<ICustomerRepository, CustomerRepository>();
+            services.AddTransient<CustomerModelRepository>();
+            services.AddTransient<EntityRepositories.ICustomerEntityRepository, CustomerEntityRepository>();
             services.AddTransient<CustomerSP>();
             services.AddTransient<CustomerDTOConverter>();
             services.AddTransient<CustomerConverter>();

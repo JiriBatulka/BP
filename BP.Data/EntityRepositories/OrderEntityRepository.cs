@@ -4,13 +4,13 @@ using BP.Models;
 using BP.StoredProcedures;
 using System.Threading.Tasks;
 
-namespace BP.Repositories
+namespace BP.EntityRepositories
 {
-    public class OrderRepository : IOrderRepository
+    public class OrderEntityRepository : IOrderEntityRepository
     {
         private readonly OrderConverter _orderConverter;
         private readonly OrderSP _orderSP;
-        public OrderRepository(OrderSP orderSP, OrderConverter orderConverter)
+        public OrderEntityRepository(OrderSP orderSP, OrderConverter orderConverter)
         {
             _orderSP = orderSP;
             _orderConverter = orderConverter;

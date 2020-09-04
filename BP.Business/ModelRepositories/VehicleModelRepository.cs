@@ -1,15 +1,14 @@
-﻿using BP.ApiRepositories.Interfaces;
-using BP.EntityRepositories;
+﻿using BP.EntityRepositories;
 using BP.Models;
 using System.Threading.Tasks;
 
-namespace BP.ApiRepositories
+namespace BP.ModelRepositories
 {
-    public class ApiVehicleRepository : IApiVehicleRepository
+    public class VehicleModelRepository
     {
-        private readonly IVehicleRepository _vehicleRepository;
+        private readonly EntityRepositories.IVehicleEntityRepository _vehicleRepository;
 
-        public ApiVehicleRepository(IVehicleRepository vehicleRepository)
+        public VehicleModelRepository(EntityRepositories.IVehicleEntityRepository vehicleRepository)
         {
             _vehicleRepository = vehicleRepository;
         }

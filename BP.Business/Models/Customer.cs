@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BP.Models
+﻿namespace BP.Models
 {
     public class Customer : User
     {

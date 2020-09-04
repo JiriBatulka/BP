@@ -1,20 +1,14 @@
 using System;
 using System.Net.Http;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Text;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using BP.Services;
-using System.IO;
-using System.Text.Json;
-using Microsoft.AspNetCore.Components;
-using BP.DTOs.Converters;
-using BP.Repositories;
+using BP.Simulation.Services;
+using BP.Simulation.DTOs.Converters;
+using BP.Simulation.Repositories;
 
-namespace BP
+namespace BP.Simulation
 {
     public class Program
     {
