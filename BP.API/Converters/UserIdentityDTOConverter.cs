@@ -18,8 +18,7 @@ namespace BP.Converters
             return new UserIdentity
             {
                 Password = _decryptionService.Decrypt(getAuthTokenDTO.EncryptedPassword),
-                Username = getAuthTokenDTO.Username,
-                ApiPassword = getAuthTokenDTO.ApiPassword
+                Username = getAuthTokenDTO.Username
             };
         }
     }

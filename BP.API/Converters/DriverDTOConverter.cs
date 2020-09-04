@@ -22,8 +22,7 @@ namespace BP.Converters
                 PhoneNumber = addDriverDTO.PhoneNumber,
                 Email = addDriverDTO.Email,
                 Password = _decryptionService.Decrypt(addDriverDTO.EncryptedPassword),
-                Username = addDriverDTO.Username,
-                ApiPassword = addDriverDTO.ApiPassword
+                Username = addDriverDTO.Username
             };
         }
     }

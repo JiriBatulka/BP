@@ -18,7 +18,6 @@ namespace BP.Simulation.DTOs.Converters
         {
             return new CustomerDTO.AddCustomerDTO()
             {
-                ApiPassword = "h&!EvEZTGc-p@F9P",
                 Email = customer.Email,
                 EncryptedPassword = _decryptionService.Encrypt(customer.Password),
                 FirstName = customer.FirstName,

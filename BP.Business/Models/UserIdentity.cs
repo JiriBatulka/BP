@@ -11,6 +11,5 @@ namespace BP.Models
         public byte[] PasswordHash { get; set; }
         public string PasswordSalt { get; set; }
         public RoleEnum Role { get; set; }
-        public string ApiPassword { get; set; }
     }
 }

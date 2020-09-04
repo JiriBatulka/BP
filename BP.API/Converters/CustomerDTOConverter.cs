@@ -24,8 +24,7 @@ namespace BP.Converters
                 PhoneNumber = addCustomerDTO.PhoneNumber,
                 Email = addCustomerDTO.Email,
                 Password = _decryptionService.Decrypt(addCustomerDTO.EncryptedPassword),
-                Username = addCustomerDTO.Username,
-                ApiPassword = addCustomerDTO.ApiPassword
+                Username = addCustomerDTO.Username
             };
         }
 

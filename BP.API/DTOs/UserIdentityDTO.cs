@@ -10,9 +10,6 @@ namespace BP.DTOs
             public string Username { get; set; }
             [Required]
             public string EncryptedPassword { get; set; }
-            [Required]
-            public string ApiPassword { get; set; }
-
         }
     }
 }

@@ -10,7 +10,6 @@
             public string Email { get; set; }
             public string Username { get; set; }
             public string EncryptedPassword { get; set; }
-            public string ApiPassword { get; set; }
         }
 
         public class GetCustomersDTO
