@@ -8,6 +8,7 @@ using BP.Simulation.Services;
 using BP.Simulation.DTOs.Converters;
 using BP.Simulation.Repositories;
 using BP.Simulation.Shared;
+using BP.Simulation.ViewModels;
 
 namespace BP.Simulation
 {
@@ -30,6 +31,7 @@ namespace BP.Simulation
             builder.Services.AddTransient<CustomerDTOConverter>();
             builder.Services.AddTransient<DecryptionService>();
             builder.Services.AddTransient<CustomerRepository>();
+            builder.Services.AddTransient<CustomerViewModel>();
             builder.Services.AddSingleton<EntitesLists>();
             await builder.Build().RunAsync();
         }

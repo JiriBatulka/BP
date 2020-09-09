@@ -8,6 +8,6 @@ namespace BP.Simulation.Shared
 {
     public class EntitesLists
     {
-        public static List<Customer> Customers { get; } = new List<Customer>();
+        public List<Customer> Customers { get; } = new List<Customer>();
     }
 }
