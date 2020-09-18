@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using System;
 
 namespace BP.API
 {
@@ -13,9 +14,21 @@ namespace BP.API
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-            Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(configuration)
-                .CreateLogger();
+            try
+            {
+                Log.Logger = new LoggerConfiguration()
+                    .ReadFrom.Configuration(configuration)
+                    .CreateLogger();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "Cant load logger");
+                return;
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
 
             CreateHostBuilder(args).Build().Run();
         }

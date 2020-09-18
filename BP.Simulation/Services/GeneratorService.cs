@@ -29,12 +29,12 @@ namespace BP.Simulation.Services
             return result;
         }
 
-        private string GeneratePassword(string firstName, string surname)
+        public string GeneratePassword(string firstName, string surname)
         {
             return $"{firstName}+{surname}@123";
         }
 
-        private string GenerateUsername(string firstName, string surname)
+        public string GenerateUsername(string firstName, string surname)
         {
             return $"{firstName[0]}.{surname}".ToLower();
         }

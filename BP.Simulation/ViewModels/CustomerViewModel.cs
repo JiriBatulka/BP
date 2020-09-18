@@ -14,12 +14,14 @@ namespace BP.Simulation.ViewModels
         private readonly GeneratorService _generatorService;
         private readonly CustomerRepository _customerRepository;
         private readonly EntitesLists _entitesLists;
+        private readonly UserRepository _userRepository;
 
-        internal CustomerViewModel(GeneratorService generatorService, CustomerRepository customerRepository, EntitesLists entitesLists)
+        internal CustomerViewModel(GeneratorService generatorService, CustomerRepository customerRepository, EntitesLists entitesLists, UserRepository userRepository)
         {
             _generatorService = generatorService;
             _customerRepository = customerRepository;
             _entitesLists = entitesLists;
+            _userRepository = userRepository;
         }
 
         public async Task GenerateCustomer()
@@ -32,7 +34,7 @@ namespace BP.Simulation.ViewModels
         public async Task FillCustomers()
         {
             _entitesLists.Customers.AddRange(await _customerRepository.GetCustomersAsync());
-            _entitesLists.Customers.Select(x => )
+            _entitesLists.Customers.Select(x => _userRepository.GetAuthToken(x));
         }
     }
 }

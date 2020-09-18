@@ -2,9 +2,11 @@
 {
     public class BusinessSettings
     {
-        public string PrivateEncryptionKey { get; }
-        public string PublicEncryptionKey { get; }
+        public virtual string PrivateEncryptionKey { get; }
+        public virtual string PublicEncryptionKey { get; }
         public string JwtSecret { get; }
+
+        public BusinessSettings() { }
 
         public BusinessSettings(string privateEncryptionKey, string publicEncryptionKey, string jwtSecret)
         {

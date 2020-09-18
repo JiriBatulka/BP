@@ -26,7 +26,7 @@ namespace BP.Controllers
             _logger = logger;
         }
 
-        [HttpGet("gettoken")]
+        [HttpPost("gettoken")]
         public async Task<IActionResult> GetAuthTokenAsync([FromBody] UserIdentityDTO.GetAuthTokenDTO value)
         {
             try
